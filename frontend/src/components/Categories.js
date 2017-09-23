@@ -12,11 +12,10 @@ class Categories extends Component {
     this.setState({
       index: key
     });
-    console.log("Index: ", key);
   };
 
   render() {
-    let eventKey = 2;
+    let eventKey = 2; // Controller for index
     const categories = this.props.categories;
     return (
       <Nav bsStyle="tabs" activeKey={this.state.index}>
