@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Route } from "react-router-dom";
 import "./css/App.css";
 import Home from "./containers/Home";
+import Category from "./containers/Category";
 import Header from "./components/Header";
 import Categories from "./components/Categories";
 import "./css/Home.css";
@@ -55,6 +56,12 @@ class App extends Component {
             exact
             path="/"
             render={() => <Home sort={this.state.sort} />}
+          />
+          <Route
+            key="category"
+            exact
+            path="/:category/post"
+            render={() => <Category sort={this.state.sort} />}
           />
         </div>
       </div>

@@ -1,11 +1,10 @@
 import React, { Component } from "react";
 import PostPreview from "../components/PostPreview";
 import PropTypes from "prop-types";
-import sortPosts from "../utils/Sort.js";
 
 const URL = process.env.REACT_APP_API_SERVER;
 
-class Home extends Component {
+class Category extends Component {
   state = {
     posts: []
   };
@@ -19,11 +18,33 @@ class Home extends Component {
         this.setState({
           posts: result
         });
+        this.sortPosts();
       });
   };
 
+  sortPosts = (posts, sort) => {
+    console.log("Entro");
+    switch (sort) {
+      case "voteScore":
+        posts.sort(function(a, b) {
+          return b.voteScore - a.voteScore;
+        });
+        console.log("Sort by Votes");
+        break;
+      case "timestamp":
+        posts.sort(function(a, b) {
+          return b.timestamp - a.timestamp;
+        });
+        console.log("Sort by TimeStamp");
+        break;
+      default:
+        break;
+    }
+    return posts;
+  };
+
   render() {
-    let posts = sortPosts(this.state.posts, this.props.sort);
+    let posts = this.sortPosts(this.state.posts, this.props.sort);
     return (
       <div className="Home">
         {posts &&
@@ -38,8 +59,8 @@ class Home extends Component {
   }
 }
 
-Home.propTypes = {
+Category.propTypes = {
   sort: PropTypes.string.isRequired
 };
 
-export default Home;
+export default Category;

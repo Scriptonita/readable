@@ -67,7 +67,7 @@ class Categories extends Component {
               return (
                 <NavItem eventKey={index} key={category.name}>
                   <Link
-                    to={{ pathname: "/" + category.path + "/posts" }}
+                    to={{ pathname: "/" + category.path }}
                     onClick={() => this.handleIndex(index)}
                   >
                     {category.name}
@@ -88,7 +88,9 @@ class Categories extends Component {
         <Grid style={styles.container}>
           <Row>
             <Col xs={2} md={2}>
-              <Button>New</Button>
+              <Button>
+                <Link to={{ pathname: "/create" }}>New</Link>
+              </Button>
             </Col>
             <Col xs={3} xsOffset={7} md={3} mdOffset={7}>
               <p style={styles.right}>
