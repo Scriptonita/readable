@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import { Link } from "react-router-dom";
 import {
   Nav,
   NavItem,
@@ -10,8 +9,8 @@ import {
   Row,
   Col
 } from "react-bootstrap";
+import { LinkContainer } from "react-router-bootstrap";
 import PropTypes from "prop-types";
-
 const styles = {
   container: {
     width: "80%"
@@ -29,16 +28,6 @@ const styles = {
 */
 
 class Categories extends Component {
-  state = {
-    index: 1
-  };
-
-  handleIndex = key => {
-    this.setState({
-      index: key
-    });
-  };
-
   sortByVotes = () => {
     this.props.sort("voteScore");
   };
@@ -52,27 +41,26 @@ class Categories extends Component {
     const categories = this.props.categories;
     return (
       <div>
-        <Nav bsStyle="tabs" activeKey={this.state.index}>
+        <Nav bsStyle="tabs">
           <NavItem eventKey={0} disabled key="Categories">
             <b>Categories</b>
           </NavItem>
-          <NavItem eventKey={1} key="allCategories">
-            <Link to={{ pathname: "/" }} onClick={() => this.handleIndex(1)}>
+          <LinkContainer to={{ pathname: "/" }} exact>
+            <NavItem eventKey={1} key="allCategories">
               All
-            </Link>
-          </NavItem>
+            </NavItem>
+          </LinkContainer>
+
           {categories &&
             categories.map(category => {
               let index = eventKey++;
               return (
-                <NavItem eventKey={index} key={category.name}>
-                  <Link
-                    to={{ pathname: "/" + category.path }}
-                    onClick={() => this.handleIndex(index)}
-                  >
-                    {category.name}
-                  </Link>
-                </NavItem>
+                <LinkContainer
+                  to={{ pathname: "/" + category.path }}
+                  key={category.name}
+                >
+                  <NavItem eventKey={index}>{category.name}</NavItem>
+                </LinkContainer>
               );
             })}
           <NavDropdown eventKey title="Sort" id="nav-dropdown">
@@ -88,9 +76,9 @@ class Categories extends Component {
         <Grid style={styles.container}>
           <Row>
             <Col xs={2} md={2}>
-              <Button>
-                <Link to={{ pathname: "/create" }}>New</Link>
-              </Button>
+              <LinkContainer to={{ pathname: "/create" }}>
+                <Button>New</Button>
+              </LinkContainer>
             </Col>
             <Col xs={3} xsOffset={7} md={3} mdOffset={7}>
               <p style={styles.right}>

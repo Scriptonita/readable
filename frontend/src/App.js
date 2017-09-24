@@ -59,9 +59,9 @@ class App extends Component {
           />
           <Route
             key="category"
-            exact
-            path="/:category/post"
-            render={() => <Category sort={this.state.sort} />}
+            path="/:category"
+            component={Category}
+            sort={this.state.sort}
           />
         </div>
       </div>
