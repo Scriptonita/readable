@@ -87,10 +87,10 @@ class Categories extends Component {
         <br />
         <Grid style={styles.container}>
           <Row>
-            <Col xs={2} ms={2}>
+            <Col xs={2} md={2}>
               <Button>New</Button>
             </Col>
-            <Col xs={3} xsOffset={7} ms={3} msOffset={7}>
+            <Col xs={3} xsOffset={7} md={3} mdOffset={7}>
               <p style={styles.right}>
                 Order by{" "}
                 <span style={{ color: "orange" }}>{this.props.sorted}</span>
