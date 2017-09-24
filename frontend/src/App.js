@@ -6,11 +6,21 @@ import Header from "./components/Header";
 import Categories from "./components/Categories";
 import "./css/Home.css";
 
+/* URL API-server */
 const URL = process.env.REACT_APP_API_SERVER;
+
+/**
+@function App
+*/
 
 class App extends Component {
   state = {
-    categories: []
+    categories: [],
+    sort: "voteScore"
+  };
+
+  handleSort = sort => {
+    this.state.sort !== sort && this.setState({ sort: sort });
   };
 
   componentDidMount = () => {
@@ -31,10 +41,17 @@ class App extends Component {
       <div className="App">
         <Header />
         <br />
-        {categories && <Categories categories={categories} />}
+        {categories && (
+          <Categories categories={categories} sort={this.handleSort} />
+        )}
         <br />
         <div className="App">
-          <Route key="home" exact path="/" render={() => <Home />} />
+          <Route
+            key="home"
+            exact
+            path="/"
+            render={() => <Home sort={this.state.sort} />}
+          />
         </div>
       </div>
     );

@@ -6,8 +6,7 @@ const Header = () => {
   return (
     <div className="Header-header">
       <img src={logo} className="Header-logo" alt="logo" />
-      <h2>Welcome to VeoMamoneo</h2>
-      <br />
+      <h2>Welcome to Readable</h2>
     </div>
   );
 };

@@ -1,7 +1,13 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
-import { Nav, NavItem } from "react-bootstrap";
+import { Nav, NavItem, NavDropdown, MenuItem } from "react-bootstrap";
 import PropTypes from "prop-types";
+
+/**
+* @function Categories
+* @Description - Show a Navbar with categories and a sort controller
+* @
+*/
 
 class Categories extends Component {
   state = {
@@ -12,6 +18,14 @@ class Categories extends Component {
     this.setState({
       index: key
     });
+  };
+
+  sortByVotes = () => {
+    this.props.sort("voteScore");
+  };
+
+  sortByTime = () => {
+    this.props.sort("timestamp");
   };
 
   render() {
@@ -41,6 +55,14 @@ class Categories extends Component {
               </NavItem>
             );
           })}
+        <NavDropdown eventKey title="Sort" id="nav-dropdown">
+          <MenuItem eventKey="4.1" onClick={this.sortByVotes}>
+            Votes
+          </MenuItem>
+          <MenuItem eventKey="4.2" onClick={this.sortByTime}>
+            Time
+          </MenuItem>
+        </NavDropdown>
       </Nav>
     );
   }
