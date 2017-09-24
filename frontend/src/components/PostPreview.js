@@ -3,14 +3,32 @@ import { Link } from "react-router-dom";
 import { Button, Jumbotron, Grid, Row, Col, Well } from "react-bootstrap";
 import PropTypes from "prop-types";
 import timeConverter from "../utils/Functions";
-const PostPreview = ({ post }) => {
+
+const styles = {
+  voteSort: {
+    textAlign: "center",
+    color: "orange"
+  },
+  notVoteSort: {
+    textAlign: "center"
+  },
+  voteTimestamp: {
+    color: "orange"
+  }
+};
+
+const PostPreview = ({ post, sorted }) => {
   return (
     <div className="container">
       <Jumbotron key={post.id}>
         <Grid style={{ width: "100%" }}>
           <Row className="show-grid">
             <Col xs={4} md={3}>
-              <Well style={{ textAlign: "center" }}>
+              <Well
+                style={
+                  sorted === "voteScore" ? styles.voteSort : styles.notVoteSort
+                }
+              >
                 <h4>{post.voteScore}</h4>
                 <h6>Votes</h6>
               </Well>
@@ -32,7 +50,11 @@ const PostPreview = ({ post }) => {
                 <b>
                   <i> at </i>
                 </b>
-                {timeConverter(post.timestamp)}
+                <span
+                  style={sorted === "timestamp" ? styles.voteTimestamp : null}
+                >
+                  {timeConverter(post.timestamp)}
+                </span>
               </p>
             </Col>
           </Row>
@@ -63,7 +85,8 @@ const PostPreview = ({ post }) => {
 };
 
 PostPreview.propTypes = {
-  post: PropTypes.object.isRequired
+  post: PropTypes.object.isRequired,
+  sorted: PropTypes.string.isRequired
 };
 
 export default PostPreview;

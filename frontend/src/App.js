@@ -42,7 +42,11 @@ class App extends Component {
         <Header />
         <br />
         {categories && (
-          <Categories categories={categories} sort={this.handleSort} />
+          <Categories
+            categories={categories}
+            sort={this.handleSort}
+            sorted={this.state.sort}
+          />
         )}
         <br />
         <div className="App">
