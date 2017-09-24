@@ -17,6 +17,13 @@ const styles = {
   }
 };
 
+/**
+* @function PostPreview
+* @Description - Show a post preview
+* @props {object} post - post data
+* @props {string} sort - Property selected for sort
+*/
+
 const PostPreview = ({ post, sorted }) => {
   return (
     <div className="container">

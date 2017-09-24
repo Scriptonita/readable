@@ -11,17 +11,17 @@ import "./css/Home.css";
 const URL = process.env.REACT_APP_API_SERVER;
 
 /**
-@function App
+* @function App
+* @description  - Main function
+* @param {function} handleSort  - Controller for sort posts
+* @param {array} categories - Posts collection
+* @param {string} sort  - Property used to sort posts
 */
 
 class App extends Component {
   state = {
     categories: [],
     sort: "voteScore"
-  };
-
-  handleSort = sort => {
-    this.state.sort !== sort && this.setState({ sort: sort });
   };
 
   componentDidMount = () => {
@@ -34,6 +34,10 @@ class App extends Component {
           categories: result.categories
         })
       );
+  };
+
+  handleSort = sort => {
+    this.state.sort !== sort && this.setState({ sort: sort });
   };
 
   render() {

@@ -5,6 +5,13 @@ import sortPosts from "../utils/Sort.js";
 
 const URL = process.env.REACT_APP_API_SERVER;
 
+/** @function
+* @name Category
+* @description - Funtionallity to show a list of post from a category
+* @param {function} getCategoryPosts - Get posts from a category
+* @param {array} posts - Posts Collection from a category
+*/
+
 class Category extends Component {
   state = {
     posts: []

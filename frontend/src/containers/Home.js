@@ -5,6 +5,13 @@ import sortPosts from "../utils/Sort.js";
 
 const URL = process.env.REACT_APP_API_SERVER;
 
+/** @function
+* @name Home
+* @description - Funtionallity to show all post
+* @param {array} posts - Posts Collection of all posts
+* @props {string} sort - property selected for sort posts
+*/
+
 class Home extends Component {
   state = {
     posts: []

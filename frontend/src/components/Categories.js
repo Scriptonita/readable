@@ -24,7 +24,10 @@ const styles = {
 /**
 * @function Categories
 * @Description - Show a Navbar with categories and a sort controller
-* @
+* @param {function} sortByVotes - Handle to sort by voteScore
+* @param {function} sortByTime - Handle to sort by timestamp
+* @props {array} categories - List of categories availables
+* @props {string} sort - Property selected for sort
 */
 
 class Categories extends Component {
