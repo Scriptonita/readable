@@ -21,7 +21,7 @@ const styles = {
 * @function PostPreview
 * @Description - Show a post preview
 * @props {object} post - post data
-* @props {string} sort - Property selected for sort
+* @props {string} sorted - Property selected for sort
 */
 
 const PostPreview = ({ post, sorted }) => {

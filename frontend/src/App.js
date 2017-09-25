@@ -55,12 +55,7 @@ class App extends Component {
         )}
         <br />
         <div className="App">
-          <Route
-            key="home"
-            exact
-            path="/"
-            render={() => <Home sort={this.state.sort} />}
-          />
+          <Route key="home" exact path="/" render={() => <Home />} />
           <Route
             key="category"
             path="/:category"
