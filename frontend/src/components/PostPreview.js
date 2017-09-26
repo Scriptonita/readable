@@ -41,9 +41,17 @@ const PostPreview = ({ post, sorted }) => {
               </Well>
             </Col>
             <Col xs={8} md={9}>
-              <h3>{post.title}</h3>
-
-              <p style={{ fontSize: "1em" }}>
+              <Link
+                to={{ pathname: "/posts/" + post.id }}
+                style={{ color: "white" }}
+              >
+                <h3 style={{ color: "black" }}>{post.title}</h3>
+              </Link>
+            </Col>
+          </Row>
+          <Row>
+            <Col xs={12} md={12}>
+              <p style={{ fontSize: "0.9em", textAlign: "right" }}>
                 <b>
                   <i>By </i>
                 </b>
@@ -63,26 +71,6 @@ const PostPreview = ({ post, sorted }) => {
                   {timeConverter(post.timestamp)}
                 </span>
               </p>
-            </Col>
-          </Row>
-          <br />
-          <Row>
-            <Col xs={12} md={12}>
-              {post.body}
-            </Col>
-          </Row>
-          <br />
-          <Row>
-            <Col xs={2} xsOffset={8} md={2} mdOffset={10}>
-              <Button bsStyle="primary">
-                <Link
-                  to={{ pathname: "/posts/" + post.id }}
-                  style={{ color: "white" }}
-                >
-                  {" "}
-                  Read{" "}
-                </Link>
-              </Button>
             </Col>
           </Row>
         </Grid>
