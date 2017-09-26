@@ -5,7 +5,8 @@ import {
   GET_POSTS_FROM_CATEGORY,
   CHANGE_SORT_BY,
   SELECT_CATEGORY,
-  GET_ALL_CATEGORIES
+  GET_ALL_CATEGORIES,
+  ACTUAL_CATEGORY
 } from "../actions";
 
 function posts(store = { posts: [], sorted: "voteScore" }, action) {
@@ -31,18 +32,26 @@ function posts(store = { posts: [], sorted: "voteScore" }, action) {
   }
 }
 
-function categories(store = { categories: [] }, action) {
+function categories(
+  store = { categories: [{ name: "All", path: "" }], actual: "All" },
+  action
+) {
   switch (action.type) {
     case GET_ALL_CATEGORIES:
       const { categories } = action;
       return {
         ...store,
-        categories: categories
+        categories: store.categories.concat(categories)
       };
     case SELECT_CATEGORY:
       return {
         ...store,
         category: action.category
+      };
+    case ACTUAL_CATEGORY:
+      return {
+        ...store,
+        actual: action.actual
       };
     default:
       return store;

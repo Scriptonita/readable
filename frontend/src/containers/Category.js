@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import PostPreview from "../components/PostPreview";
 import sortPosts from "../utils/Sort.js";
-import { getPostFromCategory } from "../actions";
+import { getPostFromCategory, actualCategory } from "../actions";
 
 const URL = process.env.REACT_APP_API_SERVER;
 
@@ -18,10 +18,12 @@ const URL = process.env.REACT_APP_API_SERVER;
 class Category extends Component {
   componentDidMount = () => {
     this.getCategoryPosts(this.props.match.params.category);
+    this.props.actualCategory(this.props.match.params.category);
   };
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.match.params.category !== this.props.match.params.category) {
+      this.props.actualCategory(nextProps.match.params.category);
       this.getCategoryPosts(nextProps.match.params.category);
     }
   }
@@ -32,7 +34,6 @@ class Category extends Component {
     })
       .then(response => response.json())
       .then(result => {
-        console.log("REsult: ", result);
         this.props.getPosts(result);
       });
   };
@@ -61,7 +62,8 @@ function mapStateToProps({ posts }) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    getPosts: posts => dispatch(getPostFromCategory(posts))
+    getPosts: posts => dispatch(getPostFromCategory(posts)),
+    actualCategory: actual => dispatch(actualCategory(actual))
   };
 }
 

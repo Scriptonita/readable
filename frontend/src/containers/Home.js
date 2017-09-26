@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import PostPreview from "../components/PostPreview";
 import sortPosts from "../utils/Sort.js";
-import { getAll } from "../actions";
+import { getAll, actualCategory } from "../actions";
 
 const URL = process.env.REACT_APP_API_SERVER;
 
@@ -21,6 +21,7 @@ class Home extends Component {
     })
       .then(response => response.json())
       .then(result => this.props.getPosts(result));
+    this.props.actualCategory("All");
   };
 
   render() {
@@ -52,7 +53,8 @@ function mapStateToProps({ posts }) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    getPosts: posts => dispatch(getAll(posts))
+    getPosts: posts => dispatch(getAll(posts)),
+    actualCategory: actual => dispatch(actualCategory(actual))
   };
 }
 

@@ -52,9 +52,10 @@ class App extends Component {
   }
 }
 
-function mapStateToProps({ posts }) {
+function mapStateToProps({ posts, categories }) {
   return {
-    sorted: posts.sorted
+    sorted: posts.sorted,
+    categories: categories.categories
   };
 }
 

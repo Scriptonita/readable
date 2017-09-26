@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import { changeSortBy } from "../actions";
 import {
   Nav,
+  Navbar,
   NavItem,
   NavDropdown,
   MenuItem,
@@ -47,42 +48,43 @@ class Categories extends Component {
     this.props.changeSortBy(sorted);
   };
 
-  render() {
-    let eventKey = 2; // Controller for index
+  categoriesList = () => {
     const categories = this.props.categories;
+    let eventKey = 0;
     return (
-      <div>
-        <Nav bsStyle="tabs">
-          <NavItem eventKey={0} disabled key="Categories">
-            <b>Categories</b>
-          </NavItem>
-          <LinkContainer to={{ pathname: "/" }} exact>
-            <NavItem eventKey={1} key="allCategories">
-              All
-            </NavItem>
-          </LinkContainer>
-
-          {categories &&
-            categories.map(category => {
-              let index = eventKey++;
-              return (
-                <LinkContainer
-                  to={{ pathname: "/" + category.path }}
-                  key={category.name}
-                >
-                  <NavItem eventKey={index}>{category.name}</NavItem>
-                </LinkContainer>
-              );
-            })}
-          <NavDropdown eventKey title="Sort" id="nav-dropdown">
-            <MenuItem eventKey="4.1" onClick={this.sortByVotes}>
+      <Navbar>
+        <Nav activeKey={this.props.actual}>
+          {categories.map(category => {
+            let index = eventKey++;
+            return (
+              <LinkContainer
+                to={{ pathname: "/" + category.path }}
+                key={"Link" + category.name}
+                exact={true}
+              >
+                <NavItem key={category.name} eventKey={index}>
+                  {category.name}
+                </NavItem>
+              </LinkContainer>
+            );
+          })}
+          <NavDropdown eventKey="sort" title="Sort" id="nav-dropdown">
+            <MenuItem eventKey="sort.1" onClick={this.sortByVotes}>
               Votes
             </MenuItem>
-            <MenuItem eventKey="4.2" onClick={this.sortByTime}>
+            <MenuItem eventKey="sort.2" onClick={this.sortByTime}>
               Time
             </MenuItem>
           </NavDropdown>
         </Nav>
+      </Navbar>
+    );
+  };
+
+  render() {
+    return (
+      <div>
+        {this.categoriesList()}
         <br />
         <Grid style={styles.container}>
           <Row>
@@ -107,6 +109,7 @@ class Categories extends Component {
 function mapStateToProps({ categories, posts }) {
   return {
     categories: categories.categories,
+    actual: categories.actual,
     sorted: posts.sorted
   };
 }
