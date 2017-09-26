@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import PostPreview from "../components/PostPreview";
-import PropTypes from "prop-types";
 import sortPosts from "../utils/Sort.js";
 import { getAll } from "../actions";
 

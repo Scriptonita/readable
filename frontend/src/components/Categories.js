@@ -12,7 +12,6 @@ import {
   Col
 } from "react-bootstrap";
 import { LinkContainer } from "react-router-bootstrap";
-import PropTypes from "prop-types";
 const styles = {
   container: {
     width: "80%"
