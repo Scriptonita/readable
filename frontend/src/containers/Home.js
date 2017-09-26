@@ -26,7 +26,6 @@ class Home extends Component {
 
   render() {
     let posts = sortPosts(this.props.posts, this.props.sorted);
-    console.log("Sorted: " + this.props.sorted);
     return (
       <div className="Home">
         {posts &&
@@ -45,10 +44,10 @@ class Home extends Component {
   }
 }
 
-function mapStateToProps({ posts, sortBy }) {
+function mapStateToProps({ posts }) {
   return {
     posts: posts.posts,
-    sorted: sortBy.sorted
+    sorted: posts.sorted
   };
 }
 

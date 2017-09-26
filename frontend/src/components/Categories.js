@@ -1,4 +1,6 @@
 import React, { Component } from "react";
+import { connect } from "react-redux";
+import { changeSortBy } from "../actions";
 import {
   Nav,
   NavItem,
@@ -24,19 +26,26 @@ const styles = {
 /**
 * @function Categories
 * @Description - Show a Navbar with categories and a sort controller
-* @param {function} sortByVotes - Handle to sort by voteScore
-* @param {function} sortByTime - Handle to sort by timestamp
+* @method {function} sortByVotes - Handle to sort by voteScore
+* @method {function} sortByTime - Handle to sort by timestamp
 * @props {array} categories - List of categories availables
 * @props {string} sort - Property selected for sort
+* @props {function} changeSortBy - Action to change Sort factor
 */
 
 class Categories extends Component {
   sortByVotes = () => {
-    this.props.sort("voteScore");
+    const sorted = {
+      sorted: "voteScore"
+    };
+    this.props.changeSortBy(sorted);
   };
 
   sortByTime = () => {
-    this.props.sort("timestamp");
+    const sorted = {
+      sorted: "timestamp"
+    };
+    this.props.changeSortBy(sorted);
   };
 
   render() {
@@ -96,9 +105,17 @@ class Categories extends Component {
   }
 }
 
-Categories.propTypes = {
-  categories: PropTypes.array.isRequired,
-  sorted: PropTypes.string.isRequired
-};
+function mapStateToProps({ categories, posts }) {
+  return {
+    categories: categories.categories,
+    sorted: posts.sorted
+  };
+}
 
-export default Categories;
+function mapDispatchToProps(dispatch) {
+  return {
+    changeSortBy: data => dispatch(changeSortBy(data))
+  };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Categories);

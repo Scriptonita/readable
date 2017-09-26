@@ -1,28 +1,22 @@
 import React, { Component } from "react";
+import { connect } from "react-redux";
 import PostPreview from "../components/PostPreview";
 import PropTypes from "prop-types";
 import sortPosts from "../utils/Sort.js";
+import { getPostFromCategory } from "../actions";
 
 const URL = process.env.REACT_APP_API_SERVER;
 
 /** @function
 * @name Category
 * @description - Funtionallity to show a list of post from a category
-* @param {function} getCategoryPosts - Get posts from a category
+* @method {function} getCategoryPosts - Get posts from a category
 * @param {array} posts - Posts Collection from a category
 */
 
 class Category extends Component {
-  state = {
-    posts: []
-  };
-
   componentDidMount = () => {
     this.getCategoryPosts(this.props.match.params.category);
-  };
-
-  componentWillReceiveProps = nextProps => {
-    this.getCategoryPosts(nextProps.match.params.category);
   };
 
   getCategoryPosts = category => {
@@ -31,20 +25,19 @@ class Category extends Component {
     })
       .then(response => response.json())
       .then(result => {
-        this.setState({
-          posts: result
-        });
+        console.log("REsult: ", result);
+        this.props.getPosts(result);
       });
   };
 
   render() {
-    const { posts } = this.state;
-    //let posts = this.getCategoryPosts();
+    const { posts, sorted } = this.props;
+    this.getCategoryPosts(this.props.match.params.category);
     return (
       <div>
         {posts &&
           posts.map(post => {
-            return <PostPreview key={post.id} post={post} sorted="voteScore" />;
+            return <PostPreview key={post.id} post={post} sorted={sorted} />;
           })}
         {!posts && <div>There are not posts</div>}
       </div>
@@ -52,4 +45,17 @@ class Category extends Component {
   }
 }
 
-export default Category;
+function mapStateToProps({ posts }) {
+  return {
+    posts: posts.posts,
+    sorted: posts.sorted
+  };
+}
+
+function mapDispatchToProps(dispatch) {
+  return {
+    getPosts: posts => dispatch(getPostFromCategory(posts))
+  };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Category);
