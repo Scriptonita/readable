@@ -5,6 +5,7 @@ import sortPosts from "../utils/Sort.js";
 import { getPostFromCategory, actualCategory } from "../actions";
 
 const URL = process.env.REACT_APP_API_SERVER;
+const HEADER = process.env.REACT_APP_API_HEADER;
 
 /** @function
 * @name Category
@@ -30,7 +31,7 @@ class Category extends Component {
 
   getCategoryPosts = category => {
     fetch(URL + "/" + category + "/posts", {
-      headers: { Authorization: "doki" }
+      headers: { Authorization: HEADER }
     })
       .then(response => response.json())
       .then(result => {

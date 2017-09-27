@@ -1,10 +1,20 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { getPost, getComments } from "../actions";
-import { Panel, Media, Button, Grid, Row, Col } from "react-bootstrap";
+import { getPost, getComments, postVoteUp, postVoteDown } from "../actions";
+import {
+  Panel,
+  Media,
+  Button,
+  Grid,
+  Row,
+  Col,
+  Well,
+  Glyphicon
+} from "react-bootstrap";
 import timeConverter from "../utils/Functions";
 
 const URL = process.env.REACT_APP_API_SERVER;
+const HEADER = process.env.REACT_APP_API_HEADER;
 
 /** @function
 * @name Post
@@ -21,14 +31,14 @@ class Post extends Component {
 
   componentDidMount = () => {
     fetch(URL + "/posts/" + this.props.match.params.id, {
-      headers: { Authorization: "doki" }
+      headers: { Authorization: HEADER }
     })
       .then(response => response.json())
       .then(result => {
         this.props.getPost(result);
       });
     fetch(URL + "/posts/" + this.props.match.params.id + "/comments", {
-      headers: { Authorization: "doki" }
+      headers: { Authorization: HEADER }
     })
       .then(response => response.json())
       .then(result => {
@@ -37,10 +47,12 @@ class Post extends Component {
   };
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.post !== this.props.post) {
-      this.setState({
-        post: nextProps.post
-      });
+    if (nextProps.posts !== this.props.posts) {
+      nextProps.posts.map(post =>
+        this.setState({
+          post: post
+        })
+      );
     }
     if (nextProps.comments !== this.props.comments) {
       this.setState({
@@ -49,43 +61,119 @@ class Post extends Component {
     }
   }
 
+  votePostUp = () => {
+    let { post } = this.state;
+    post.voteScore++;
+    this.setState({
+      post: post
+    });
+    fetch(URL + "/posts/" + post.id, {
+      headers: {
+        Authorization: HEADER,
+        Accept: "application/json",
+        "Content-Type": "application/json"
+      },
+      method: "POST",
+      body: JSON.stringify({
+        option: "upVote"
+      })
+    })
+      .then(res => console.log(this.props.voteUp()))
+      .catch(error => console.log("Error al votar: ", error));
+  };
+
+  votePostDown = () => {
+    let { post } = this.state;
+    post.voteScore--;
+    this.setState({
+      post: post
+    });
+    fetch(URL + "/posts/" + post.id, {
+      headers: {
+        Authorization: HEADER,
+        Accept: "application/json",
+        "Content-Type": "application/json"
+      },
+      method: "POST",
+      body: JSON.stringify({
+        option: "downVote"
+      })
+    })
+      .then(res => console.log(this.props.voteDown()))
+      .catch(error => console.log("Error al votar: ", error));
+  };
+
   render() {
     const { post, comments } = this.state;
-    console.log("COmments: ", comments);
     return (
       <div>
         {post && (
           <Grid>
             <Row>
               <Col xs={10} xsOffset={1} md={8} mdOffset={2}>
-                <Panel>
-                  <h2>{post.title}</h2>
-                  <p style={{ fontSize: "0.9em", textAlign: "right" }}>
-                    By {post.author} at {timeConverter(post.timestamp)}
-                  </p>
-                  <p>{post.body}</p>
-                </Panel>
-              </Col>
-            </Row>
-            <Row>
-              <Col xs={10} xsOffset={1} md={8} mdOffset={2}>
-                <Media.List>
-                  {comments &&
-                    comments.map(comment => {
-                      return (
-                        <Media.ListItem>
-                          <Media>
-                            <Media.Body>
-                              <Media.Heading>{comment.author}: </Media.Heading>
-                              <Media.Body>
-                                <p>{comment.body}</p>
-                              </Media.Body>
-                            </Media.Body>
-                          </Media>
-                        </Media.ListItem>
-                      );
-                    })}
-                </Media.List>
+                <Row>
+                  <Col xs={4} md={3}>
+                    <Well style={{ textAlign: "center" }}>
+                      <Row>
+                        <h4>{post.voteScore}</h4>
+                        <h6>Votes</h6>
+                      </Row>
+                      <Row style={{ textAlign: "center" }}>
+                        <Col xs={6} md={6}>
+                          <Glyphicon
+                            glyph="arrow-up"
+                            onClick={this.votePostUp}
+                          />
+                        </Col>
+                        <Col xs={6} md={6}>
+                          <Glyphicon
+                            glyph="arrow-down"
+                            onClick={this.votePostDown}
+                          />
+                        </Col>
+                      </Row>
+                    </Well>
+                  </Col>
+                  <Col xs={8} md={9}>
+                    <h3 style={{ color: "black" }}>{post.title}</h3>
+                    <p style={{ fontSize: "0.9em" }}>
+                      By {post.author} at {timeConverter(post.timestamp)}
+                    </p>
+                  </Col>
+                </Row>
+                <Row>
+                  <Col xs={12} md={12}>
+                    <p>{post.body}</p>
+                  </Col>
+                </Row>
+                <br />
+                <Row>
+                  <Col xs={12} md={12}>
+                    <Media.List>
+                      <p>({comments && comments.length}) Comments</p>
+                      {comments &&
+                        comments.map(
+                          comment =>
+                            !comment.deleted && (
+                              <Media.ListItem key={comment.id}>
+                                <Media>
+                                  <Panel>
+                                    <Media.Body>
+                                      <Media.Heading>
+                                        {comment.author}:{" "}
+                                      </Media.Heading>
+                                      <Media.Body>
+                                        <p>{comment.body}</p>
+                                      </Media.Body>
+                                    </Media.Body>
+                                  </Panel>
+                                </Media>
+                              </Media.ListItem>
+                            )
+                        )}
+                    </Media.List>
+                  </Col>
+                </Row>
               </Col>
             </Row>
           </Grid>
@@ -95,17 +183,19 @@ class Post extends Component {
   }
 }
 
-function mapStateToProps({ post }) {
+function mapStateToProps({ posts, comments }) {
   return {
-    post: post.post,
-    comments: post.comments
+    posts: posts.posts,
+    comments: comments.comments
   };
 }
 
 function mapDispatchToProps(dispatch) {
   return {
     getPost: post => dispatch(getPost(post)),
-    getComments: comments => dispatch(getComments(comments))
+    getComments: comments => dispatch(getComments(comments)),
+    voteUp: () => dispatch(postVoteUp()),
+    voteDown: () => dispatch(postVoteDown())
   };
 }
 

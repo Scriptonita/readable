@@ -12,6 +12,7 @@ import { getAllCategories } from "./actions";
 
 /* URL API-server */
 const URL = process.env.REACT_APP_API_SERVER;
+const HEADER = process.env.REACT_APP_API_HEADER;
 
 /**
 * @function App
@@ -24,7 +25,7 @@ const URL = process.env.REACT_APP_API_SERVER;
 class App extends Component {
   componentDidMount = () => {
     fetch(URL + "/categories", {
-      headers: { Authorization: "oki" }
+      headers: { Authorization: HEADER }
     })
       .then(response => response.json())
       .then(result => this.props.allCategories(result));

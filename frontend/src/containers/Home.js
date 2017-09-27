@@ -5,6 +5,7 @@ import sortPosts from "../utils/Sort.js";
 import { getAll, actualCategory } from "../actions";
 
 const URL = process.env.REACT_APP_API_SERVER;
+const HEADER = process.env.REACT_APP_API_HEADER;
 
 /** @function
 * @name Home
@@ -17,7 +18,7 @@ const URL = process.env.REACT_APP_API_SERVER;
 class Home extends Component {
   componentDidMount = () => {
     fetch(URL + "/posts", {
-      headers: { Authorization: "doki" }
+      headers: { Authorization: HEADER }
     })
       .then(response => response.json())
       .then(result => this.props.getPosts(result));
@@ -29,15 +30,16 @@ class Home extends Component {
     return (
       <div className="Home">
         {posts &&
-          posts.map(post => {
-            return (
-              <PostPreview
-                key={post.id}
-                post={post}
-                sorted={this.props.sorted}
-              />
-            );
-          })}
+          posts.map(
+            post =>
+              !post.deleted && (
+                <PostPreview
+                  key={post.id}
+                  post={post}
+                  sorted={this.props.sorted}
+                />
+              )
+          )}
         {!posts && <div>There are not posts</div>}
       </div>
     );

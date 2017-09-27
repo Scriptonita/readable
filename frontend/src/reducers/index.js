@@ -8,21 +8,39 @@ import {
   GET_ALL_CATEGORIES,
   ACTUAL_CATEGORY,
   GET_A_POST,
-  GET_COMMENTS_FOR_A_POST
+  GET_COMMENTS_FOR_A_POST,
+  POST_VOTE_UP,
+  POST_VOTE_DOWN
 } from "../actions";
 
 function posts(store = { posts: [], sorted: "voteScore" }, action) {
-  const { posts, sorted } = action;
+  const { posts, sorted, post, id } = action;
   switch (action.type) {
     case GET_ALL_POSTS:
+      store.posts = [];
       return {
         ...store,
         posts: posts
       };
     case GET_POSTS_FROM_CATEGORY:
+      store.posts = [];
       return {
         ...store,
         posts: posts
+      };
+    case GET_A_POST:
+      store.posts = [];
+      return {
+        ...store,
+        posts: store.posts.concat(post)
+      };
+    case POST_VOTE_UP:
+      return {
+        ...store
+      };
+    case POST_VOTE_DOWN:
+      return {
+        ...store
       };
     case CHANGE_SORT_BY:
       return {
@@ -60,18 +78,14 @@ function categories(
   }
 }
 
-function post(store = { post: {}, comments: {} }, action) {
+function comments(store = { comments: [] }, action) {
   switch (action.type) {
-    case GET_A_POST:
-      return {
-        ...store,
-        post: action.post
-      };
     case GET_COMMENTS_FOR_A_POST:
       return {
         ...store,
         comments: action.comments
       };
+
     default:
       return store;
   }
@@ -80,5 +94,5 @@ function post(store = { post: {}, comments: {} }, action) {
 export default combineReducers({
   posts,
   categories,
-  post
+  comments
 });
