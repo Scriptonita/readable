@@ -53,7 +53,7 @@ class Categories extends Component {
     let eventKey = 0;
     return (
       <Navbar>
-        <Nav activeKey={this.props.actual}>
+        <Nav bsStyle="pills" activeKey={this.props.actual}>
           {categories.map(category => {
             let index = eventKey++;
             return (

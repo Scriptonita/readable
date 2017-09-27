@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 import "./css/App.css";
 import Home from "./containers/Home";
 import Category from "./containers/Category";
+import Post from "./containers/Post";
 import Header from "./components/Header";
 import Categories from "./components/Categories";
 import "./css/Home.css";
@@ -37,15 +38,15 @@ class App extends Component {
           <br />
           <Categories />
           <br />
-          <div className="App">
-            <Route key="home" exact path="/" render={() => <Home />} />
-            <Route
-              key="category"
-              path="/:category"
-              component={Category}
-              sort={this.props.sort}
-            />
-          </div>
+          <Route key="home" exact path="/" render={() => <Home />} />
+          <Route key="post" path="/posts/:id" component={Post} />
+          <Route
+            key="category"
+            exact
+            path="/:category"
+            component={Category}
+            sort={this.props.sort}
+          />
         </div>
       </BrowserRouter>
     );

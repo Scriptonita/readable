@@ -25,7 +25,7 @@ class Home extends Component {
   };
 
   render() {
-    let posts = sortPosts(this.props.posts, this.props.sorted);
+    const posts = sortPosts(this.props.posts, this.props.sorted);
     return (
       <div className="Home">
         {posts &&

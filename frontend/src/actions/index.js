@@ -4,6 +4,8 @@ export const CHANGE_SORT_BY = "CHANGE_SORT_BY";
 export const SELECT_CATEGORY = "SELECT_CATEGORY";
 export const GET_ALL_CATEGORIES = "GET_ALL_CATEGORIES";
 export const ACTUAL_CATEGORY = "ACTUAL_CATEGORY";
+export const GET_A_POST = "GET_A_POST";
+export const GET_COMMENTS_FOR_A_POST = "GET_COMMENTS_FOR_A_POST";
 
 export function getAll(posts) {
   return {
@@ -44,5 +46,19 @@ export function actualCategory(actual) {
   return {
     type: ACTUAL_CATEGORY,
     actual
+  };
+}
+
+export function getPost(post) {
+  return {
+    type: GET_A_POST,
+    post
+  };
+}
+
+export function getComments(comments) {
+  return {
+    type: GET_COMMENTS_FOR_A_POST,
+    comments
   };
 }

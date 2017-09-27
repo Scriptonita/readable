@@ -40,7 +40,7 @@ class Category extends Component {
 
   render() {
     const { posts, sorted } = this.props;
-    let postsSorted = sortPosts(posts, sorted);
+    const postsSorted = sortPosts(posts, sorted);
     return (
       <div>
         {postsSorted &&

@@ -6,7 +6,9 @@ import {
   CHANGE_SORT_BY,
   SELECT_CATEGORY,
   GET_ALL_CATEGORIES,
-  ACTUAL_CATEGORY
+  ACTUAL_CATEGORY,
+  GET_A_POST,
+  GET_COMMENTS_FOR_A_POST
 } from "../actions";
 
 function posts(store = { posts: [], sorted: "voteScore" }, action) {
@@ -58,7 +60,25 @@ function categories(
   }
 }
 
+function post(store = { post: {}, comments: {} }, action) {
+  switch (action.type) {
+    case GET_A_POST:
+      return {
+        ...store,
+        post: action.post
+      };
+    case GET_COMMENTS_FOR_A_POST:
+      return {
+        ...store,
+        comments: action.comments
+      };
+    default:
+      return store;
+  }
+}
+
 export default combineReducers({
   posts,
-  categories
+  categories,
+  post
 });
