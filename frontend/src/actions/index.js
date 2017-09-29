@@ -8,6 +8,8 @@ export const GET_A_POST = "GET_A_POST";
 export const GET_COMMENTS_FOR_A_POST = "GET_COMMENTS_FOR_A_POST";
 export const POST_VOTE_UP = "POST_VOTE_UP";
 export const POST_VOTE_DOWN = "POST_VOTE_DOWN";
+export const COMMENT_VOTE_UP = "COMMENT_VOTE_UP";
+export const COMMENT_VOTE_DOWN = "COMMENT_VOTE_DOWN";
 
 export function getAll(posts) {
   return {
@@ -74,5 +76,17 @@ export function postVoteUp() {
 export function postVoteDown() {
   return {
     type: POST_VOTE_DOWN
+  };
+}
+
+export function commentVoteUp() {
+  return {
+    type: COMMENT_VOTE_UP
+  };
+}
+
+export function commentVoteDown() {
+  return {
+    type: COMMENT_VOTE_DOWN
   };
 }

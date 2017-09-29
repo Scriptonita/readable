@@ -10,7 +10,9 @@ import {
   GET_A_POST,
   GET_COMMENTS_FOR_A_POST,
   POST_VOTE_UP,
-  POST_VOTE_DOWN
+  POST_VOTE_DOWN,
+  COMMENT_VOTE_UP,
+  COMMENT_VOTE_DOWN
 } from "../actions";
 
 function posts(store = { posts: [], sorted: "voteScore" }, action) {
@@ -78,14 +80,16 @@ function categories(
   }
 }
 
-function comments(store = {}, action) {
+function comments(store = [], action) {
   switch (action.type) {
     case GET_COMMENTS_FOR_A_POST:
-      const { comments } = action;
-      return {
-        ...store,
-        ...comments
-      };
+      return [...action.comments];
+
+    case COMMENT_VOTE_UP:
+      return store;
+
+    case COMMENT_VOTE_DOWN:
+      return store;
 
     default:
       return store;

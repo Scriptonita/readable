@@ -12,6 +12,7 @@ import {
   Glyphicon
 } from "react-bootstrap";
 import timeConverter from "../utils/Functions";
+import Comments from "./Comments";
 
 const URL = process.env.REACT_APP_API_SERVER;
 const HEADER = process.env.REACT_APP_API_HEADER;
@@ -149,29 +150,7 @@ class Post extends Component {
                 <br />
                 <Row>
                   <Col xs={12} md={12}>
-                    <Media.List>
-                      <p>({comments && comments.length}) Comments</p>
-                      {comments &&
-                        comments.map(
-                          comment =>
-                            !comment.deleted && (
-                              <Media.ListItem key={comment.id}>
-                                <Media>
-                                  <Panel>
-                                    <Media.Body>
-                                      <Media.Heading>
-                                        {comment.author}:{" "}
-                                      </Media.Heading>
-                                      <Media.Body>
-                                        <p>{comment.body}</p>
-                                      </Media.Body>
-                                    </Media.Body>
-                                  </Panel>
-                                </Media>
-                              </Media.ListItem>
-                            )
-                        )}
-                    </Media.List>
+                    <Comments id={post.id} />
                   </Col>
                 </Row>
               </Col>
@@ -185,8 +164,7 @@ class Post extends Component {
 
 function mapStateToProps({ posts, comments }) {
   return {
-    posts: posts.posts,
-    comments: comments.comments
+    posts: posts.posts
   };
 }
 
