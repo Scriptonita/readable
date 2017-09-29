@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { Jumbotron, Grid, Row, Col, Well } from "react-bootstrap";
+import { Grid, Row, Col, Well } from "react-bootstrap";
 import PropTypes from "prop-types";
 import timeConverter from "../utils/Functions";
 import "../css/Post.css";

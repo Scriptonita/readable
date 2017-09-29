@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { getPost, getComments, postVoteUp, postVoteDown } from "../actions";
-import { Grid, Row, Col } from "react-bootstrap";
+import { Row, Col } from "react-bootstrap";
 import timeConverter from "../utils/Functions";
 import Comments from "./Comments";
 import Votes from "../components/Votes.js";

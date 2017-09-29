@@ -9,7 +9,7 @@ import Header from "./components/Header";
 import Categories from "./components/Categories";
 import "./css/Home.css";
 import { getAllCategories } from "./actions";
-import { Grid, Row, Col, Well } from "react-bootstrap";
+import { Grid, Row, Col } from "react-bootstrap";
 
 /* URL API-server */
 const URL = process.env.REACT_APP_API_SERVER;
