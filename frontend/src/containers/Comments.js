@@ -5,6 +5,7 @@ import PropTypes from "prop-types";
 import timeConverter from "../utils/Functions";
 import Votes from "../components/Votes.js";
 import { getComments, commentVoteUp, commentVoteDown } from "../actions";
+import sortPosts from "../utils/Sort.js";
 
 const URL = process.env.REACT_APP_API_SERVER;
 const HEADER = process.env.REACT_APP_API_HEADER;
@@ -29,23 +30,9 @@ class Comments extends Component {
         this.props.getComments(result);
       });
   };
-  /*
-  componentWillReceiveProps(nextProps) {
-    if (nextProps.comments !== this.props.comments) {
-      this.setState({
-        comments: nextProps.comments
-      });
-    }
-  }
-*/
-  voteCommentUp = id => {
-    /*
-  let { post } = this.state;
-  post.voteScore++;
-  this.setState({
-    post: post
-  });*/
-    fetch(URL + "/comments/" + id, {
+
+  vote = (id, option) => {
+    return fetch(URL + "/comments/" + id, {
       headers: {
         Authorization: HEADER,
         Accept: "application/json",
@@ -53,9 +40,13 @@ class Comments extends Component {
       },
       method: "POST",
       body: JSON.stringify({
-        option: "upVote"
+        option: option
       })
-    })
+    });
+  };
+
+  voteCommentUp = id => {
+    this.vote(id, "upVote")
       .then(res => {
         this.props.voteUp();
         this.getCommentsPost();
@@ -64,24 +55,7 @@ class Comments extends Component {
   };
 
   voteCommentDown = id => {
-    /*
-  let { post } = this.state;
-  post.voteScore--;
-  this.setState({
-    post: post
-  });
-  */
-    fetch(URL + "/comments/" + id, {
-      headers: {
-        Authorization: HEADER,
-        Accept: "application/json",
-        "Content-Type": "application/json"
-      },
-      method: "POST",
-      body: JSON.stringify({
-        option: "downVote"
-      })
-    })
+    this.vote(id, "downVote")
       .then(res => {
         this.props.voteDown();
         this.getCommentsPost();
@@ -90,8 +64,8 @@ class Comments extends Component {
   };
 
   render() {
-    const { comments } = this.props;
-    console.log("COMMMENTAIORO: ", comments);
+    let { comments } = this.props;
+    comments = sortPosts(comments, "voteScore");
     return (
       <Media.List>
         <p>({comments && comments.length}) Comments</p>

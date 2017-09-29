@@ -40,7 +40,7 @@ class App extends Component {
           <Categories />
           <br />
           <Route key="home" exact path="/" render={() => <Home />} />
-          <Route key="post" path="/posts/:id" component={Post} />
+          <Route key="post" exact path="/posts/:id" component={Post} />
           <Route
             key="category"
             exact

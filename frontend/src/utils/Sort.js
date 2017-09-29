@@ -16,7 +16,7 @@ function sortPosts(posts, sort) {
     }
     return posts;
   }
-  return null;
+  return [];
 }
 
 export default sortPosts;

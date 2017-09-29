@@ -16,7 +16,7 @@ import {
 } from "../actions";
 
 function posts(store = { posts: [], sorted: "voteScore" }, action) {
-  const { posts, sorted, post, id } = action;
+  const { posts, sorted, post } = action;
   switch (action.type) {
     case GET_ALL_POSTS:
       store.posts = [];
@@ -83,6 +83,7 @@ function categories(
 function comments(store = [], action) {
   switch (action.type) {
     case GET_COMMENTS_FOR_A_POST:
+      store = [];
       return [...action.comments];
 
     case COMMENT_VOTE_UP:
