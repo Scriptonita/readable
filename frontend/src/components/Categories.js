@@ -85,22 +85,19 @@ class Categories extends Component {
     return (
       <div>
         {this.categoriesList()}
-        <br />
-        <Grid style={styles.container}>
-          <Row>
-            <Col xs={2} md={2}>
-              <LinkContainer to={{ pathname: "/create" }}>
-                <Button>New</Button>
-              </LinkContainer>
-            </Col>
-            <Col xs={3} xsOffset={7} md={3} mdOffset={7}>
-              <p style={styles.right}>
-                Order by{" "}
-                <span style={{ color: "orange" }}>{this.props.sorted}</span>
-              </p>
-            </Col>
-          </Row>
-        </Grid>
+        <Row>
+          <Col xs={2} md={2}>
+            <LinkContainer to={{ pathname: "/create" }}>
+              <Button>New</Button>
+            </LinkContainer>
+          </Col>
+          <Col xs={3} xsOffset={7} md={3} mdOffset={7}>
+            <p style={styles.right}>
+              Order by{" "}
+              <span style={{ color: "orange" }}>{this.props.sorted}</span>
+            </p>
+          </Col>
+        </Row>
       </div>
     );
   }

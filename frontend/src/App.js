@@ -9,6 +9,7 @@ import Header from "./components/Header";
 import Categories from "./components/Categories";
 import "./css/Home.css";
 import { getAllCategories } from "./actions";
+import { Grid, Row, Col, Well } from "react-bootstrap";
 
 /* URL API-server */
 const URL = process.env.REACT_APP_API_SERVER;
@@ -37,17 +38,23 @@ class App extends Component {
         <div className="App">
           <Header />
           <br />
-          <Categories />
-          <br />
-          <Route key="home" exact path="/" render={() => <Home />} />
-          <Route key="post" exact path="/posts/:id" component={Post} />
-          <Route
-            key="category"
-            exact
-            path="/:category"
-            component={Category}
-            sort={this.props.sort}
-          />
+          <Grid>
+            <Row>
+              <Col xs={10} xsOffset={1} md={8} mdOffset={2}>
+                <Categories />
+                <br />
+                <Route key="home" exact path="/" render={() => <Home />} />
+                <Route key="post" exact path="/posts/:id" component={Post} />
+                <Route
+                  key="category"
+                  exact
+                  path="/:category"
+                  component={Category}
+                  sort={this.props.sort}
+                />
+              </Col>
+            </Row>
+          </Grid>
         </div>
       </BrowserRouter>
     );

@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import PostPreview from "../components/PostPreview";
 import sortPosts from "../utils/Sort.js";
 import { getAll, actualCategory } from "../actions";
+import { Grid, Row, Col, Well } from "react-bootstrap";
 
 const URL = process.env.REACT_APP_API_SERVER;
 const HEADER = process.env.REACT_APP_API_HEADER;

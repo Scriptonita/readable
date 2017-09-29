@@ -5,6 +5,7 @@ import { Grid, Row, Col } from "react-bootstrap";
 import timeConverter from "../utils/Functions";
 import Comments from "./Comments";
 import Votes from "../components/Votes.js";
+import "../css/Post.css";
 
 const URL = process.env.REACT_APP_API_SERVER;
 const HEADER = process.env.REACT_APP_API_HEADER;
@@ -66,41 +67,37 @@ class Post extends Component {
   render() {
     const { post } = this.props;
     return (
-      <div>
+      <div className="post">
         {post && (
-          <Grid>
+          <div>
             <Row>
-              <Col xs={10} xsOffset={1} md={8} mdOffset={2}>
-                <Row>
-                  <Col xs={4} md={3}>
-                    <Votes
-                      id={post.id}
-                      votes={post.voteScore}
-                      voteUp={this.votePostUp}
-                      voteDown={this.votePostDown}
-                    />
-                  </Col>
-                  <Col xs={8} md={9}>
-                    <h3 style={{ color: "black" }}>{post.title}</h3>
-                    <p style={{ fontSize: "0.9em" }}>
-                      By {post.author} at {timeConverter(post.timestamp)}
-                    </p>
-                  </Col>
-                </Row>
-                <Row>
-                  <Col xs={12} md={12}>
-                    <p>{post.body}</p>
-                  </Col>
-                </Row>
-                <br />
-                <Row>
-                  <Col xs={12} md={12}>
-                    <Comments id={this.props.match.params.id} />
-                  </Col>
-                </Row>
+              <Col xs={4} md={3}>
+                <Votes
+                  id={post.id}
+                  votes={post.voteScore}
+                  voteUp={this.votePostUp}
+                  voteDown={this.votePostDown}
+                />
+              </Col>
+              <Col xs={8} md={9}>
+                <h3 style={{ color: "black" }}>{post.title}</h3>
+                <p style={{ fontSize: "0.9em" }}>
+                  By {post.author} at {timeConverter(post.timestamp)}
+                </p>
               </Col>
             </Row>
-          </Grid>
+            <Row>
+              <Col xs={12} md={12}>
+                <p>{post.body}</p>
+              </Col>
+            </Row>
+            <br />
+            <Row>
+              <Col xs={12} md={12}>
+                <Comments id={this.props.match.params.id} />
+              </Col>
+            </Row>
+          </div>
         )}
       </div>
     );
