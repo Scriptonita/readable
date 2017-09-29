@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { Media, Panel, Row, Col } from "react-bootstrap";
+import { Media, Panel, Row, Col, Glyphicon } from "react-bootstrap";
 import PropTypes from "prop-types";
 import timeConverter from "../utils/Functions";
 import Votes from "../components/Votes.js";
@@ -94,6 +94,14 @@ class Comments extends Component {
                             <p>{comment.body}</p>
                           </Media.Body>
                         </Media.Body>
+                      </Col>
+                    </Row>
+                    <Row>
+                      <Col xs={6} md={11}>
+                        <Glyphicon glyph="option-vertical" />
+                      </Col>
+                      <Col xs={6} md={1} style={{ textAlign: "right" }}>
+                        {timeConverter(comment.timestamp)}
                       </Col>
                     </Row>
                   </Media>

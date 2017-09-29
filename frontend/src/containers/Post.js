@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { getPost, getComments, postVoteUp, postVoteDown } from "../actions";
-import { Row, Col } from "react-bootstrap";
+import { Row, Col, Glyphicon } from "react-bootstrap";
 import timeConverter from "../utils/Functions";
 import Comments from "./Comments";
 import Votes from "../components/Votes.js";
@@ -70,6 +70,20 @@ class Post extends Component {
       <div className="post">
         {post && (
           <div>
+            <Row>
+              <Col
+                xs={1}
+                xsOffset={9}
+                md={1}
+                mdOffset={10}
+                style={{ textAlign: "right" }}
+              >
+                <Glyphicon glyph="pencil" />
+              </Col>
+              <Col xs={1} md={1}>
+                <Glyphicon glyph="remove-circle" />
+              </Col>
+            </Row>
             <Row>
               <Col xs={4} md={3}>
                 <Votes

@@ -1,12 +1,23 @@
 import React from "react";
 import "../css/Header.css";
-import logo from "../logo.svg";
+import readable from "../images/readable.png";
+
+import { Grid, Row, Col, Image } from "react-bootstrap";
 
 const Header = () => {
   return (
     <div className="Header-header">
-      <img src={logo} className="Header-logo" alt="logo" />
-      <h2>Welcome to Readable</h2>
+      <Grid>
+        <Row>
+          <Col xs={10} xsOffset={1} md={8} mdOffset={2}>
+            <Row>
+              <Col xs={8} md={8}>
+                <Image src={readable} alt="Readable" responsive />
+              </Col>
+            </Row>
+          </Col>
+        </Row>
+      </Grid>
     </div>
   );
 };
