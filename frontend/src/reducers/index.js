@@ -78,12 +78,13 @@ function categories(
   }
 }
 
-function comments(store = { comments: [] }, action) {
+function comments(store = {}, action) {
   switch (action.type) {
     case GET_COMMENTS_FOR_A_POST:
+      const { comments } = action;
       return {
         ...store,
-        comments: action.comments
+        ...comments
       };
 
     default:
