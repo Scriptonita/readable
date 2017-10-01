@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
+import { Link } from "react-router-dom";
 import { getPost, getComments, postVoteUp, postVoteDown } from "../actions";
 import { Row, Col, Glyphicon } from "react-bootstrap";
 import timeConverter from "../utils/Functions";
@@ -110,6 +111,9 @@ class Post extends Component {
               <Col xs={12} md={12}>
                 <Comments id={this.props.match.params.id} />
               </Col>
+            </Row>
+            <Row>
+              <Col xs={12} md={12} />
             </Row>
           </div>
         )}

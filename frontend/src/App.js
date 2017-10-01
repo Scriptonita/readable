@@ -5,6 +5,7 @@ import "./css/App.css";
 import Home from "./containers/Home";
 import Category from "./containers/Category";
 import Post from "./containers/Post";
+import CommentEdit from "./containers/CommentEdit";
 import Header from "./components/Header";
 import Categories from "./components/Categories";
 import "./css/Home.css";
@@ -51,6 +52,12 @@ class App extends Component {
                   path="/:category"
                   component={Category}
                   sort={this.props.sort}
+                />
+                <Route
+                  key="editComment"
+                  exact
+                  path="/comments/edit/:id"
+                  component={CommentEdit}
                 />
               </Col>
             </Row>
