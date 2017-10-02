@@ -1,4 +1,5 @@
 export const GET_ALL_POSTS = "GET_ALL_POSTS";
+export const ADD_NEW_POST = "ADD_NEW_POST";
 export const GET_POSTS_FROM_CATEGORY = "GET_POSTS_FROM_CATEGORY";
 export const CHANGE_SORT_BY = "CHANGE_SORT_BY";
 export const SELECT_CATEGORY = "SELECT_CATEGORY";
@@ -32,6 +33,12 @@ export function getPost(post) {
   return {
     type: GET_A_POST,
     post
+  };
+}
+
+export function newPost() {
+  return {
+    type: ADD_NEW_POST
   };
 }
 

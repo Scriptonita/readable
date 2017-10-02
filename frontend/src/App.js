@@ -6,6 +6,7 @@ import Home from "./containers/Home";
 import Category from "./containers/Category";
 import Post from "./containers/Post";
 import CommentEdit from "./containers/CommentEdit";
+import NewPost from "./containers/NewPost";
 import Header from "./components/Header";
 import Categories from "./components/Categories";
 import "./css/Home.css";
@@ -46,6 +47,7 @@ class App extends Component {
                 <br />
                 <Route key="home" exact path="/" render={() => <Home />} />
                 <Route key="post" exact path="/posts/:id" component={Post} />
+                <Route key="create" exact path="/create" component={NewPost} />
                 <Route
                   key="category"
                   exact

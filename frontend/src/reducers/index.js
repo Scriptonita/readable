@@ -2,6 +2,7 @@ import { combineReducers } from "redux";
 
 import {
   GET_ALL_POSTS,
+  ADD_NEW_POST,
   GET_POSTS_FROM_CATEGORY,
   CHANGE_SORT_BY,
   SELECT_CATEGORY,
@@ -27,6 +28,8 @@ function posts(store = { posts: [], sorted: "voteScore" }, action) {
         ...store,
         posts: posts
       };
+    case ADD_NEW_POST:
+      return store;
     case GET_POSTS_FROM_CATEGORY:
       store.posts = [];
       return {
