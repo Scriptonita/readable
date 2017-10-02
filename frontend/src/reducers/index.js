@@ -14,7 +14,8 @@ import {
   COMMENT_VOTE_UP,
   COMMENT_VOTE_DOWN,
   COMMENT_EDITED,
-  COMMENT_DELETED
+  COMMENT_DELETED,
+  COMMENT_SAVED
 } from "../actions";
 
 function posts(store = { posts: [], sorted: "voteScore" }, action) {
@@ -98,6 +99,9 @@ function comments(store = [], action) {
       return store;
 
     case COMMENT_DELETED:
+      return store;
+
+    case COMMENT_SAVED:
       return store;
 
     default:

@@ -18,6 +18,7 @@ const HEADER = process.env.REACT_APP_API_HEADER;
 */
 
 class Comments extends Component {
+  /*
   componentDidMount = () => {
     this.getCommentsPost();
   };
@@ -31,7 +32,7 @@ class Comments extends Component {
         this.props.getComments(result);
       });
   };
-
+*/
   vote = (id, option) => {
     return fetch(URL + "/comments/" + id, {
       headers: {
@@ -50,7 +51,7 @@ class Comments extends Component {
     this.vote(id, "upVote")
       .then(res => {
         this.props.voteUp();
-        this.getCommentsPost();
+        this.props.voted();
       })
       .catch(error => console.log("Error al votar: ", error));
   };
@@ -59,7 +60,7 @@ class Comments extends Component {
     this.vote(id, "downVote")
       .then(res => {
         this.props.voteDown();
-        this.getCommentsPost();
+        this.props.voted();
       })
       .catch(error => console.log("Error al votar: ", error));
   };

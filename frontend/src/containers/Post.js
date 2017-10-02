@@ -6,6 +6,7 @@ import { Row, Col, Glyphicon } from "react-bootstrap";
 import timeConverter from "../utils/Functions";
 import Comments from "./Comments";
 import Votes from "../components/Votes.js";
+import AddComment from "./AddComment";
 import "../css/Post.css";
 
 const URL = process.env.REACT_APP_API_SERVER;
@@ -21,6 +22,7 @@ const HEADER = process.env.REACT_APP_API_HEADER;
 class Post extends Component {
   componentDidMount = () => {
     this.getPostDetails(this.props.match.params.id);
+    this.getCommentsPost();
   };
 
   getPostDetails = id => {
@@ -30,6 +32,16 @@ class Post extends Component {
       .then(response => response.json())
       .then(result => {
         this.props.getPost(result);
+      });
+  };
+
+  getCommentsPost = () => {
+    fetch(URL + "/posts/" + this.props.match.params.id + "/comments", {
+      headers: { Authorization: HEADER }
+    })
+      .then(response => response.json())
+      .then(result => {
+        this.props.getComments(result);
       });
   };
 
@@ -109,11 +121,19 @@ class Post extends Component {
             <br />
             <Row>
               <Col xs={12} md={12}>
-                <Comments id={this.props.match.params.id} />
+                <Comments
+                  id={this.props.match.params.id}
+                  voted={this.getCommentsPost}
+                />
               </Col>
             </Row>
             <Row>
-              <Col xs={12} md={12} />
+              <Col xs={12} md={12}>
+                <AddComment
+                  id={this.props.match.params.id}
+                  added={this.getCommentsPost}
+                />
+              </Col>
             </Row>
           </div>
         )}

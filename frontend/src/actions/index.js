@@ -12,6 +12,7 @@ export const COMMENT_VOTE_UP = "COMMENT_VOTE_UP";
 export const COMMENT_VOTE_DOWN = "COMMENT_VOTE_DOWN";
 export const COMMENT_EDITED = "COMMENT_EDITED";
 export const COMMENT_DELETED = "COMMENT_DELETED";
+export const COMMENT_SAVED = "COMMENT_SAVED";
 
 export function getAll(posts) {
   return {
@@ -102,5 +103,11 @@ export function commentEdited() {
 export function commentDeleted() {
   return {
     type: COMMENT_DELETED
+  };
+}
+
+export function commentSaved() {
+  return {
+    type: COMMENT_SAVED
   };
 }
