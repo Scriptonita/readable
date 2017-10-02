@@ -10,6 +10,8 @@ export const POST_VOTE_UP = "POST_VOTE_UP";
 export const POST_VOTE_DOWN = "POST_VOTE_DOWN";
 export const COMMENT_VOTE_UP = "COMMENT_VOTE_UP";
 export const COMMENT_VOTE_DOWN = "COMMENT_VOTE_DOWN";
+export const COMMENT_EDITED = "COMMENT_EDITED";
+export const COMMENT_DELETED = "COMMENT_DELETED";
 
 export function getAll(posts) {
   return {
@@ -88,5 +90,17 @@ export function commentVoteUp() {
 export function commentVoteDown() {
   return {
     type: COMMENT_VOTE_DOWN
+  };
+}
+
+export function commentEdited() {
+  return {
+    type: COMMENT_EDITED
+  };
+}
+
+export function commentDeleted() {
+  return {
+    type: COMMENT_DELETED
   };
 }

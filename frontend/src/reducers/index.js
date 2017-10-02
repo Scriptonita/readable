@@ -12,7 +12,9 @@ import {
   POST_VOTE_UP,
   POST_VOTE_DOWN,
   COMMENT_VOTE_UP,
-  COMMENT_VOTE_DOWN
+  COMMENT_VOTE_DOWN,
+  COMMENT_EDITED,
+  COMMENT_DELETED
 } from "../actions";
 
 function posts(store = { posts: [], sorted: "voteScore" }, action) {
@@ -90,6 +92,12 @@ function comments(store = [], action) {
       return store;
 
     case COMMENT_VOTE_DOWN:
+      return store;
+
+    case COMMENT_EDITED:
+      return store;
+
+    case COMMENT_DELETED:
       return store;
 
     default:

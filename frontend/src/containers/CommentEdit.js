@@ -11,8 +11,7 @@ import {
   FormControl,
   ControlLabel
 } from "react-bootstrap";
-import PropTypes from "prop-types";
-import { getComments, commentVoteUp, commentVoteDown } from "../actions";
+import { commentEdited, commentDeleted } from "../actions";
 import "../css/CommentEdit.css";
 
 const URL = process.env.REACT_APP_API_SERVER;
@@ -80,7 +79,7 @@ class Comments extends Component {
         timestamp: new Date(),
         body: this.state.comment.body
       })
-    }).then(result => console.log("Comment edited: " + this.state.comment.id));
+    }).then(result => this.props.commentEdited());
   };
 
   deleteComment = () => {
@@ -91,7 +90,7 @@ class Comments extends Component {
         "Content-Type": "application/json"
       },
       method: "DELETE"
-    }).then(result => console.log("Comment deleted: " + this.state.comment.id));
+    }).then(result => this.props.commentDeleted());
   };
 
   render() {
@@ -104,7 +103,10 @@ class Comments extends Component {
           <div>
             <h3>Edit Comment</h3>
             <br />
-            <p>Author: {comment.author}</p>
+            <p>
+              <b>Author: {comment.author}</b>
+            </p>
+            <br />
             <Form>
               <FormGroup
                 controlId={"body-" + comment.id}
@@ -174,9 +176,8 @@ function mapStateToProps({ comments, posts }) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    getComments: comments => dispatch(getComments(comments)),
-    voteUp: () => dispatch(commentVoteUp()),
-    voteDown: () => dispatch(commentVoteDown())
+    commentEdited: () => dispatch(commentEdited()),
+    commentDeleted: () => dispatch(commentDeleted())
   };
 }
 

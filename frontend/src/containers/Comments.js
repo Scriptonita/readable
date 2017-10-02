@@ -1,15 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
-import {
-  Media,
-  Panel,
-  Row,
-  Col,
-  Glyphicon,
-  Modal,
-  Button
-} from "react-bootstrap";
+import { Media, Panel, Row, Col, Glyphicon } from "react-bootstrap";
 import PropTypes from "prop-types";
 import timeConverter from "../utils/Functions";
 import Votes from "../components/Votes.js";
@@ -108,7 +100,7 @@ class Comments extends Component {
                     <Row>
                       <Col xs={6} md={8}>
                         <Link to={{ pathname: "/comments/edit/" + comment.id }}>
-                          <Glyphicon glyph="option-vertical" />
+                          <Glyphicon glyph="pencil" />
                         </Link>
                       </Col>
                       <Col xs={6} md={4} style={{ textAlign: "right" }}>
