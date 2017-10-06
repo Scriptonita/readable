@@ -20,10 +20,8 @@ const HEADER = process.env.REACT_APP_API_HEADER;
 
 /**
 * @function App
-* @description  - Main function
-* @method {function} handleSort  - Controller for sort posts
-* @props {array} categories - Posts collection
-* @props {string} sort  - Property used to sort posts
+* @description  - Main function, depending on URL we get a functionallity
+* @method {function} componentDidMount  - Get all categories
 */
 
 class App extends Component {

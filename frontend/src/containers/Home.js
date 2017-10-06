@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import PostPreview from "../components/PostPreview";
+import PostPreview from "./PostPreview";
 import sortPosts from "../utils/Sort.js";
 import { getAll, actualCategory } from "../actions";
 

@@ -103,15 +103,6 @@ class PostPreview extends Component {
                 voteDown={this.votePostDown}
                 sorted={sorted}
               />
-              {/*  <Well
-                style={
-                  sorted === "voteScore" ? styles.voteSort : styles.notVoteSort
-                }
-              >
-                <h4>{post.voteScore}</h4>
-                <h6>Votes</h6>
-              </Well>
-              */}
               <p style={{ textAlign: "left" }}>
                 {"(" + comments + ") Comments"}
               </p>

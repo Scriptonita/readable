@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import PostPreview from "../components/PostPreview";
+import PostPreview from "./PostPreview";
 import sortPosts from "../utils/Sort.js";
 import { getPostFromCategory, actualCategory } from "../actions";
 
@@ -13,7 +13,8 @@ const HEADER = process.env.REACT_APP_API_HEADER;
 * @method {function} getCategoryPosts - Get posts from a category
 * @props {array} posts - Posts Collection from a category
 * @props {string} sort - property selected for sort posts
-* @props {function} getPosts - Set posts to Store
+* @props {function} getPosts - dispatch getPostFromCategory() action to get posts
+* @props {string} actualCategory - dispatch actualCategory() action to set the category
 */
 
 class Category extends Component {

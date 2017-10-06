@@ -13,9 +13,13 @@ const styles = {
 };
 
 /**
-* @function Comments
-* @Description - Show a list of comments
-* @props {array} comments - comments data
+* @function Votes
+* @Description - functionallity for votes in Post and Comments
+* @props {string} id - identify a post or comment
+* @props {number} votes - number of votes
+* @props {function} voteUp - Send to server a vote up
+* @props {function} voteDown - Sent to server a vote Down
+* @props {string} sorted - controller for sort
 */
 
 const Votes = ({ id, votes, voteUp, voteDown, sorted }) => {

@@ -19,32 +19,50 @@ const URL = process.env.REACT_APP_API_SERVER;
 const HEADER = process.env.REACT_APP_API_HEADER;
 
 /**
-* @function CommentEdit
+* @function AddComments
 * @Description - Show a list of comments
 * @props {array} comments - comments data
+* @props {function} commentSaved: dispatch commentSaved action,
+* @props {function} getComments: dispatch getComments action
+* @param {boolean} alertVisible: to show alert message
+* @param {boolean} successVisible: to show success message
+* @param {boolean} authorMod: avoid an error status on author without content on mounting
+* @param {boobean} bodyMod: avoid an error status on body without content on mounting
+* @param {object} comment: author and body contain the comment data
+* @method getValidateName: controller for Author
+* @method getValidateBody: controller for body
+* @method handleName: set state.comment.author with input
+* @method handleBody: set state.comment.body with input
+* @method saveComment: send comment data to server
+* @method handleDismiss: hide the error message
+* @method handleSuccess: hide the success message
 */
 
 class AddComments extends Component {
   state = {
     comment: {
-      body: "Think before you write",
-      author: "Your name"
+      body: "",
+      author: ""
     },
-    alertVisible: false
+    alertVisible: false,
+    successVisible: false,
+    authorMod: false,
+    bodyMod: false
   };
 
   getValidateName = () => {
     const length = this.state.comment.author.length;
-    if (length === 0) return "error";
+    if (length === 0 && this.state.authoMod) return "error";
   };
 
   getValidateBody = () => {
     const length = this.state.comment.body.length;
-    if (length === 0) return "error";
+    if (length === 0 && this.state.bodyMod) return "error";
   };
 
   handleName = e => {
     this.setState({
+      authorMod: true,
       comment: {
         ...this.state.comment,
         author: e.target.value
@@ -54,6 +72,7 @@ class AddComments extends Component {
 
   handleBody = e => {
     this.setState({
+      bodyMod: true,
       comment: {
         ...this.state.comment,
         body: e.target.value
@@ -85,9 +104,12 @@ class AddComments extends Component {
         this.props.added();
         this.setState({
           comment: {
-            body: "Another comment",
-            author: "Your name"
-          }
+            body: "",
+            author: ""
+          },
+          successVisible: true,
+          authorMod: false,
+          bodyMod: false
         });
       });
     } else {
@@ -103,13 +125,24 @@ class AddComments extends Component {
     });
   };
 
+  handleSuccess = () => {
+    this.setState({
+      successVisible: false
+    });
+  };
+
   render() {
-    let { comment, alertVisible } = this.state;
+    let { comment, alertVisible, successVisible } = this.state;
     return (
       <div className="post">
         {alertVisible && (
           <Alert bsStyle="danger" onDismiss={this.handleDismiss}>
             <p>There is at least one invalid field</p>
+          </Alert>
+        )}
+        {successVisible && (
+          <Alert bsStyle="success" onDismiss={this.handleSuccess}>
+            <p>Your comment was added. Thanks!!</p>
           </Alert>
         )}
         <div>
@@ -125,6 +158,7 @@ class AddComments extends Component {
               <FormControl
                 type="text"
                 onChange={this.handleName}
+                placeholder="Your name"
                 value={comment.author}
               />
             </FormGroup>
@@ -136,6 +170,7 @@ class AddComments extends Component {
               <FormControl
                 componentClass="textarea"
                 onChange={this.handleBody}
+                placeholder="A comment"
                 value={comment.body}
               />
             </FormGroup>

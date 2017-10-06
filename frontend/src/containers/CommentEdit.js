@@ -9,7 +9,8 @@ import {
   Form,
   FormGroup,
   FormControl,
-  ControlLabel
+  ControlLabel,
+  Alert
 } from "react-bootstrap";
 import { commentEdited, commentDeleted } from "../actions";
 import "../css/CommentEdit.css";
@@ -20,14 +21,29 @@ const HEADER = process.env.REACT_APP_API_HEADER;
 /**
 * @function CommentEdit
 * @Description - Show a list of comments
+* @props {array} posts - parent post data
 * @props {array} comments - comments data
+* @props {function} commentEdited - dispatch commentEdited() action,
+* @props {function} commentDeleted - dispatch(commentDeleted() action,
+* @param {boolean} alertVisible: to show alert message
+* @param {boolean} successVisible: to show success message
+* @param {boolean} authorMod: avoid an error status on author without content on mounting
+* @param {boobean} bodyMod: avoid an error status on body without content on mounting
+* @param {object} comment: author and body contain the comment data
+* @method getValidateName: controller for Author
+* @method getValidateBody: controller for body
+* @method handleName: set state.comment.author with input
+* @method handleBody: set state.comment.body with input
+* @method saveComment: send comment data to server
+* @method handleDismiss: hide the error message
+* @method handleSuccess: hide the success message
 */
 
 class CommentEdit extends Component {
   state = {
     comment: {},
-    loaded: false,
-    value: ""
+    alertVisible: false,
+    successVisible: false
   };
 
   componentWillMount = () => {
@@ -68,18 +84,42 @@ class CommentEdit extends Component {
   };
 
   saveComment = () => {
-    fetch(URL + "/comments/" + this.state.comment.id, {
-      headers: {
-        Authorization: HEADER,
-        Accept: "application/json",
-        "Content-Type": "application/json"
-      },
-      method: "PUT",
-      body: JSON.stringify({
-        timestamp: new Date(),
-        body: this.state.comment.body
-      })
-    }).then(result => this.props.commentEdited());
+    const { comment } = this.state;
+    if (comment.body !== "") {
+      fetch(URL + "/comments/" + this.state.comment.id, {
+        headers: {
+          Authorization: HEADER,
+          Accept: "application/json",
+          "Content-Type": "application/json"
+        },
+        method: "PUT",
+        body: JSON.stringify({
+          timestamp: new Date(),
+          body: this.state.comment.body
+        })
+      }).then(result => {
+        this.setState({
+          successVisible: true
+        });
+        this.props.commentEdited();
+      });
+    } else {
+      this.setState({
+        alertVisible: true
+      });
+    }
+  };
+
+  handleDismiss = () => {
+    this.setState({
+      alertVisible: false
+    });
+  };
+
+  handleSuccess = () => {
+    this.setState({
+      successVisible: false
+    });
   };
 
   deleteComment = () => {
@@ -94,11 +134,24 @@ class CommentEdit extends Component {
   };
 
   render() {
-    let { comment } = this.state;
+    let { comment, alertVisible, successVisible } = this.state;
     console.log("POST: ", this.props.post);
     const { post } = this.props;
     return (
       <div className="post">
+        {alertVisible && (
+          <Alert bsStyle="danger" onDismiss={this.handleDismiss}>
+            <p>The comment is invalid</p>
+          </Alert>
+        )}
+        {successVisible && (
+          <Alert bsStyle="success" onDismiss={this.handleSuccess}>
+            <p>
+              The comment was saved. Click "Back" if you want to back to the
+              post.
+            </p>
+          </Alert>
+        )}
         {comment && (
           <div>
             <h3>Edit Comment</h3>
@@ -133,15 +186,9 @@ class CommentEdit extends Component {
                     </Link>
                   </Col>
                   <Col xs={4} md={2}>
-                    <Link
-                      to={{ pathname: "/posts/" + post.id }}
-                      style={{ color: "white" }}
-                      onClick={this.saveComment}
-                    >
-                      <Button bsStyle="success">
-                        <Glyphicon glyph="ok-sign" /> Save
-                      </Button>
-                    </Link>
+                    <Button bsStyle="success" onClick={this.saveComment}>
+                      <Glyphicon glyph="ok-sign" /> Save
+                    </Button>
                   </Col>
                   <Col xs={4} md={2}>
                     <Link
@@ -160,7 +207,9 @@ class CommentEdit extends Component {
           </div>
         )}
         {!comment && (
-          <p>You have to access to edit comments throught a link in comment.</p>
+          <Alert bsStyle="danger">
+            You have to access to edit comments throught a link in comment.
+          </Alert>
         )}
       </div>
     );

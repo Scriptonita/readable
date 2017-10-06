@@ -4,6 +4,11 @@ import readable from "../images/readable.png";
 
 import { Grid, Row, Col, Image } from "react-bootstrap";
 
+/**
+* @function Header
+* @Description - Show the header.
+*/
+
 const Header = () => {
   return (
     <div className="Header-header">
