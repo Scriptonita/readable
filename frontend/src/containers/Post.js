@@ -79,22 +79,16 @@ class Post extends Component {
 
   render() {
     const { post } = this.props;
+    console.log("POST: ", post);
     return (
       <div className="post">
         {post && (
           <div>
             <Row>
-              <Col
-                xs={1}
-                xsOffset={9}
-                md={1}
-                mdOffset={10}
-                style={{ textAlign: "right" }}
-              >
-                <Glyphicon glyph="pencil" />
-              </Col>
-              <Col xs={1} md={1}>
-                <Glyphicon glyph="remove-circle" />
+              <Col xs={12} md={12} style={{ textAlign: "right" }}>
+                <Link to={{ pathname: "/edit/" + post.id }}>
+                  <Glyphicon glyph="pencil" />
+                </Link>
               </Col>
             </Row>
             <Row>

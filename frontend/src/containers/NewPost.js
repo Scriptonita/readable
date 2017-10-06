@@ -11,7 +11,7 @@ import {
   ControlLabel,
   Alert
 } from "react-bootstrap";
-import { commentSaved, getComments } from "../actions";
+import { newPost } from "../actions";
 
 const URL = process.env.REACT_APP_API_SERVER;
 const HEADER = process.env.REACT_APP_API_HEADER;
@@ -112,15 +112,14 @@ class NewPost extends Component {
           id: Math.random()
             .toString(21)
             .substr(2, 10),
-          timestamp: new Date(),
+          timestamp: Date.now(),
           body: post.body,
           author: post.author,
           title: post.title,
           category: post.category
         })
       }).then(result => {
-        //this.props.commentSaved();
-
+        this.props.newPost();
         this.setState({
           post: {
             author: "",
@@ -150,6 +149,7 @@ class NewPost extends Component {
 
   render() {
     let { post, alertVisible, successVisible } = this.state;
+    const { categories } = this.props;
     return (
       <div className="post">
         {alertVisible && (
@@ -186,9 +186,18 @@ class NewPost extends Component {
                 onChange={this.handleCategory}
                 placeholder="select"
               >
-                <option value="react">React</option>
+                {categories.map(
+                  category =>
+                    category.name !== "all" && (
+                      <option key={category.name} value={category.name}>
+                        {category.name}
+                      </option>
+                    )
+                )}
+
+                {/*<option value="react">React</option>
                 <option value="redux">Redux</option>
-                <option value="udacity">Udacity</option>
+                <option value="udacity">Udacity</option>*/}
               </FormControl>
             </FormGroup>
             <FormGroup
@@ -230,16 +239,16 @@ class NewPost extends Component {
   }
 }
 
-function mapStateToProps({ posts }) {
+function mapStateToProps({ categories }) {
   return {
-    posts: posts
+    //posts: posts,
+    categories: categories.categories
   };
 }
 
 function mapDispatchToProps(dispatch) {
   return {
-    commentSaved: () => dispatch(commentSaved()),
-    getComments: () => dispatch(getComments())
+    newPost: () => dispatch(newPost())
   };
 }
 

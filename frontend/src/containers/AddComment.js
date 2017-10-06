@@ -76,7 +76,7 @@ class AddComments extends Component {
             .toString(21)
             .substr(2, 10),
           parentId: this.props.id,
-          timestamp: new Date(),
+          timestamp: Date.now(),
           body: comment.body,
           author: comment.author
         })

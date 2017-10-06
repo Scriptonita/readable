@@ -17,12 +17,16 @@ const HEADER = process.env.REACT_APP_API_HEADER;
 
 class Home extends Component {
   componentDidMount = () => {
+    this.getAllPosts();
+    this.props.actualCategory("All");
+  };
+
+  getAllPosts = () => {
     fetch(URL + "/posts", {
       headers: { Authorization: HEADER }
     })
       .then(response => response.json())
       .then(result => this.props.getPosts(result));
-    this.props.actualCategory("All");
   };
 
   render() {
@@ -36,7 +40,7 @@ class Home extends Component {
                 <PostPreview
                   key={post.id}
                   post={post}
-                  sorted={this.props.sorted}
+                  voted={this.getAllPosts}
                 />
               )
           )}

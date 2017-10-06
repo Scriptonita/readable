@@ -3,6 +3,8 @@ import { combineReducers } from "redux";
 import {
   GET_ALL_POSTS,
   ADD_NEW_POST,
+  POST_EDITED,
+  POST_DELETED,
   GET_POSTS_FROM_CATEGORY,
   CHANGE_SORT_BY,
   SELECT_CATEGORY,
@@ -28,40 +30,49 @@ function posts(store = { posts: [], sorted: "voteScore" }, action) {
         ...store,
         posts: posts
       };
+
     case ADD_NEW_POST:
       return store;
+
+    case POST_EDITED:
+      return store;
+
+    case POST_DELETED:
+      return store;
+
     case GET_POSTS_FROM_CATEGORY:
       store.posts = [];
       return {
         ...store,
         posts: posts
       };
+
     case GET_A_POST:
       store.posts = [];
       return {
         ...store,
         posts: store.posts.concat(post)
       };
+
     case POST_VOTE_UP:
-      return {
-        ...store
-      };
+      return store;
+
     case POST_VOTE_DOWN:
-      return {
-        ...store
-      };
+      return store;
+
     case CHANGE_SORT_BY:
       return {
         ...store,
         sorted: sorted
       };
+
     default:
       return store;
   }
 }
 
 function categories(
-  store = { categories: [{ name: "All", path: "" }], actual: "All" },
+  store = { categories: [{ name: "all", path: "" }], actual: "all" },
   action
 ) {
   switch (action.type) {

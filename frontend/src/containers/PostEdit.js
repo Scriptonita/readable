@@ -11,7 +11,7 @@ import {
   FormControl,
   ControlLabel
 } from "react-bootstrap";
-import { commentEdited, commentDeleted } from "../actions";
+import { editPost, deletePost } from "../actions";
 import "../css/CommentEdit.css";
 
 const URL = process.env.REACT_APP_API_SERVER;
@@ -23,52 +23,49 @@ const HEADER = process.env.REACT_APP_API_HEADER;
 * @props {array} comments - comments data
 */
 
-class CommentEdit extends Component {
+class PostEdit extends Component {
   state = {
-    comment: {},
+    post: {},
     loaded: false,
     value: ""
   };
 
   componentWillMount = () => {
-    const comment = this.props.comments.filter(
-      c => c.id === this.props.match.params.id
-    );
     this.setState({
-      comment: comment[0]
+      post: this.props.post
     });
   };
 
-  getValidateName = () => {
-    const length = this.state.comment.author.length;
+  getValidateTitle = () => {
+    const length = this.state.post.title.length;
     if (length === 0) return "error";
   };
 
   getValidateBody = () => {
-    const length = this.state.comment.body.length;
+    const length = this.state.post.body.length;
     if (length === 0) return "error";
   };
 
-  handleName = e => {
+  handleTitle = e => {
     this.setState({
-      comment: {
-        ...this.state.comment,
-        author: e.target.value
+      post: {
+        ...this.state.post,
+        title: e.target.value
       }
     });
   };
 
   handleBody = e => {
     this.setState({
-      comment: {
-        ...this.state.comment,
+      post: {
+        ...this.state.post,
         body: e.target.value
       }
     });
   };
 
-  saveComment = () => {
-    fetch(URL + "/comments/" + this.state.comment.id, {
+  savePost = () => {
+    fetch(URL + "/posts/" + this.props.match.params.id, {
       headers: {
         Authorization: HEADER,
         Accept: "application/json",
@@ -76,47 +73,61 @@ class CommentEdit extends Component {
       },
       method: "PUT",
       body: JSON.stringify({
-        timestamp: new Date(),
-        body: this.state.comment.body
+        title: this.state.post.title,
+        body: this.state.post.body
       })
-    }).then(result => this.props.commentEdited());
+    }).then(result => {
+      this.props.editPost();
+    });
   };
 
-  deleteComment = () => {
-    fetch(URL + "/comments/" + this.state.comment.id, {
+  deletePost = () => {
+    fetch(URL + "/posts/" + this.props.match.params.id, {
       headers: {
         Authorization: HEADER,
         Accept: "application/json",
         "Content-Type": "application/json"
       },
       method: "DELETE"
-    }).then(result => this.props.commentDeleted());
+    }).then(result => {
+      this.props.deletePost();
+    });
   };
 
   render() {
-    let { comment } = this.state;
     console.log("POST: ", this.props.post);
-    const { post } = this.props;
+    const { post } = this.state;
     return (
       <div className="post">
-        {comment && (
+        {post && (
           <div>
-            <h3>Edit Comment</h3>
+            <h3>Edit Post</h3>
             <br />
             <p>
-              <b>Author: {comment.author}</b>
+              <b>Author: {post.author}</b>
             </p>
             <br />
             <Form>
               <FormGroup
-                controlId={"body-" + comment.id}
+                controlId={"title-" + post.title}
+                validationState={this.getValidateTitle()}
+              >
+                <ControlLabel>Title</ControlLabel>
+                <FormControl
+                  type="text"
+                  onChange={this.handleTitle}
+                  value={post.title}
+                />
+              </FormGroup>
+              <FormGroup
+                controlId={"body-" + post.id}
                 validationState={this.getValidateBody()}
               >
-                <ControlLabel>Comment</ControlLabel>
+                <ControlLabel>Post</ControlLabel>
                 <FormControl
                   componentClass="textarea"
                   onChange={this.handleBody}
-                  value={comment.body}
+                  value={post.body}
                 />
               </FormGroup>
               <br />
@@ -136,7 +147,7 @@ class CommentEdit extends Component {
                     <Link
                       to={{ pathname: "/posts/" + post.id }}
                       style={{ color: "white" }}
-                      onClick={this.saveComment}
+                      onClick={this.savePost}
                     >
                       <Button bsStyle="success">
                         <Glyphicon glyph="ok-sign" /> Save
@@ -145,9 +156,9 @@ class CommentEdit extends Component {
                   </Col>
                   <Col xs={4} md={2}>
                     <Link
-                      to={{ pathname: "/posts/" + post.id }}
+                      to={{ pathname: "/" }}
                       style={{ color: "white" }}
-                      onClick={this.deleteComment}
+                      onClick={this.deletePost}
                     >
                       <Button bsStyle="danger">
                         <Glyphicon glyph="remove-sign" /> Delete
@@ -159,26 +170,25 @@ class CommentEdit extends Component {
             </Form>
           </div>
         )}
-        {!comment && (
-          <p>You have to access to edit comments throught a link in comment.</p>
+        {!post && (
+          <p>You have to access to edit posts throught a link in post.</p>
         )}
       </div>
     );
   }
 }
 
-function mapStateToProps({ comments, posts }) {
+function mapStateToProps({ posts }) {
   return {
-    comments: comments,
     post: posts.posts[0]
   };
 }
 
 function mapDispatchToProps(dispatch) {
   return {
-    commentEdited: () => dispatch(commentEdited()),
-    commentDeleted: () => dispatch(commentDeleted())
+    deletePost: () => dispatch(deletePost()),
+    editPost: () => dispatch(editPost())
   };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(CommentEdit);
+export default connect(mapStateToProps, mapDispatchToProps)(PostEdit);

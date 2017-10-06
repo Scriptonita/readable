@@ -7,6 +7,7 @@ import Category from "./containers/Category";
 import Post from "./containers/Post";
 import CommentEdit from "./containers/CommentEdit";
 import NewPost from "./containers/NewPost";
+import PostEdit from "./containers/PostEdit";
 import Header from "./components/Header";
 import Categories from "./components/Categories";
 import "./css/Home.css";
@@ -48,6 +49,7 @@ class App extends Component {
                 <Route key="home" exact path="/" render={() => <Home />} />
                 <Route key="post" exact path="/posts/:id" component={Post} />
                 <Route key="create" exact path="/create" component={NewPost} />
+                <Route key="edit" exact path="/edit/:id" component={PostEdit} />
                 <Route
                   key="category"
                   exact

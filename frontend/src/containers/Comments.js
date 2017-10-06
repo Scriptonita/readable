@@ -11,6 +11,16 @@ import sortPosts from "../utils/Sort.js";
 const URL = process.env.REACT_APP_API_SERVER;
 const HEADER = process.env.REACT_APP_API_HEADER;
 
+const styles = {
+  sortedTimestamp: {
+    color: "orange",
+    textAlign: "center"
+  },
+  notSortedTimestamp: {
+    textAlign: "center"
+  }
+};
+
 /**
 * @function Comments
 * @Description - Show a list of comments
@@ -66,8 +76,8 @@ class Comments extends Component {
   };
 
   render() {
-    let { comments } = this.props;
-    comments = sortPosts(comments, "voteScore");
+    let { comments, sorted } = this.props;
+    comments = sortPosts(comments, sorted);
     return (
       <Media.List>
         <p>({comments && comments.length}) Comments</p>
@@ -86,6 +96,7 @@ class Comments extends Component {
                             votes={comment.voteScore}
                             voteUp={this.voteCommentUp}
                             voteDown={this.voteCommentDown}
+                            sorted={sorted}
                           />
                         </Media.Left>
                       </Col>
@@ -104,7 +115,15 @@ class Comments extends Component {
                           <Glyphicon glyph="pencil" />
                         </Link>
                       </Col>
-                      <Col xs={6} md={4} style={{ textAlign: "right" }}>
+                      <Col
+                        xs={6}
+                        md={4}
+                        style={
+                          sorted === "timestamp"
+                            ? styles.sortedTimestamp
+                            : styles.notSortedTimestamp
+                        }
+                      >
                         {timeConverter(comment.timestamp)}
                       </Col>
                     </Row>
@@ -122,9 +141,10 @@ Comments.propTypes = {
   id: PropTypes.string.isRequired
 };
 
-function mapStateToProps({ comments }) {
+function mapStateToProps({ comments, posts }) {
   return {
-    comments: comments
+    comments: comments,
+    sorted: posts.sorted
   };
 }
 
