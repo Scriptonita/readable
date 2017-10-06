@@ -12,7 +12,9 @@ const HEADER = process.env.REACT_APP_API_HEADER;
 * @description - Funtionallity to show all post
 * @props {array} posts - Posts Collection of all posts from Store
 * @props {string} sort - property selected for sort posts
-* @props {function} getPosts - Fetch posts to Store
+* @props {function} getPosts - dispatch getAll action
+* @props {function} actualCategory - dispatch actualCategory action
+* @method getAllPosts - get all post from server and save in store
 */
 
 class Home extends Component {

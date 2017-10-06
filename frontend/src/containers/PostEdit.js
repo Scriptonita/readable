@@ -9,7 +9,8 @@ import {
   Form,
   FormGroup,
   FormControl,
-  ControlLabel
+  ControlLabel,
+  Alert
 } from "react-bootstrap";
 import { editPost, deletePost } from "../actions";
 import "../css/CommentEdit.css";
@@ -20,14 +21,26 @@ const HEADER = process.env.REACT_APP_API_HEADER;
 /**
 * @function CommentEdit
 * @Description - Show a list of comments
-* @props {array} comments - comments data
+* @props {function} deletePost - dispatch deletePost action
+* @props {function} editPost - dispatch editPost action
+* @param {object} post - post data to edit
+* @param {boolean} alertVisible: to show alert message
+* @param {boolean} successVisible: to show success message
+* @method getValidateTitle: controller for title
+* @method getValidateBody: controller for body
+* @method handleTitle: set state.comment.title with input
+* @method handleBody: set state.comment.body with input
+* @method savePost: send post data to server
+* @method deletePost: send delete flag in post to server
+* @method handleDismiss: hide the error message
+* @method handleSuccess: hide the success message
 */
 
 class PostEdit extends Component {
   state = {
     post: {},
-    loaded: false,
-    value: ""
+    successVisible: false,
+    alertVisible: false
   };
 
   componentWillMount = () => {
@@ -64,21 +77,43 @@ class PostEdit extends Component {
     });
   };
 
-  savePost = () => {
-    fetch(URL + "/posts/" + this.props.match.params.id, {
-      headers: {
-        Authorization: HEADER,
-        Accept: "application/json",
-        "Content-Type": "application/json"
-      },
-      method: "PUT",
-      body: JSON.stringify({
-        title: this.state.post.title,
-        body: this.state.post.body
-      })
-    }).then(result => {
-      this.props.editPost();
+  handleDismiss = () => {
+    this.setState({
+      alertVisible: false
     });
+  };
+
+  handleSuccess = () => {
+    this.setState({
+      successVisible: false
+    });
+  };
+
+  savePost = () => {
+    const { post } = this.state;
+    if (post.title !== "" && post.body !== "") {
+      fetch(URL + "/posts/" + this.props.match.params.id, {
+        headers: {
+          Authorization: HEADER,
+          Accept: "application/json",
+          "Content-Type": "application/json"
+        },
+        method: "PUT",
+        body: JSON.stringify({
+          title: this.state.post.title,
+          body: this.state.post.body
+        })
+      }).then(result => {
+        this.setState({
+          successVisible: true
+        });
+        this.props.editPost();
+      });
+    } else {
+      this.setState({
+        alertVisible: true
+      });
+    }
   };
 
   deletePost = () => {
@@ -96,11 +131,24 @@ class PostEdit extends Component {
 
   render() {
     console.log("POST: ", this.props.post);
-    const { post } = this.state;
+    const { post, alertVisible, successVisible } = this.state;
     return (
       <div className="post">
         {post && (
           <div>
+            {alertVisible && (
+              <Alert bsStyle="danger" onDismiss={this.handleDismiss}>
+                <p>There is at least one field invalid</p>
+              </Alert>
+            )}
+            {successVisible && (
+              <Alert bsStyle="success" onDismiss={this.handleSuccess}>
+                <p>
+                  The post was saved. Click "Back" if you want to back to post.
+                  post.
+                </p>
+              </Alert>
+            )}
             <h3>Edit Post</h3>
             <br />
             <p>
@@ -144,15 +192,9 @@ class PostEdit extends Component {
                     </Link>
                   </Col>
                   <Col xs={4} md={2}>
-                    <Link
-                      to={{ pathname: "/posts/" + post.id }}
-                      style={{ color: "white" }}
-                      onClick={this.savePost}
-                    >
-                      <Button bsStyle="success">
-                        <Glyphicon glyph="ok-sign" /> Save
-                      </Button>
-                    </Link>
+                    <Button bsStyle="success" onClick={this.savePost}>
+                      <Glyphicon glyph="ok-sign" /> Save
+                    </Button>
                   </Col>
                   <Col xs={4} md={2}>
                     <Link
@@ -171,7 +213,9 @@ class PostEdit extends Component {
           </div>
         )}
         {!post && (
-          <p>You have to access to edit posts throught a link in post.</p>
+          <Alert bsStyle="danger">
+            You have to access to edit posts through a link in post.
+          </Alert>
         )}
       </div>
     );

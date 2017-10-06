@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
-import { Grid, Row, Col, Well } from "react-bootstrap";
+import { Grid, Row, Col } from "react-bootstrap";
 import PropTypes from "prop-types";
 import timeConverter from "../utils/Functions";
 import "../css/Post.css";
@@ -28,12 +28,19 @@ const styles = {
 * @function PostPreview
 * @Description - Show a post preview
 * @props {object} post - post data
-* @props {string} sorted - Property selected for sort
+* @props {string} sorted - controller for sort posts
+* @props {function} voteUp - dispatch postVoteUp action
+* @props {function} voteDown - dispatch postVoteDown action
+* @param {number} comments - number of comments in post.
+* @method vote - send a vote to server
+* @method votePostUp - set the vote to Up
+* @method votePostDown - set the vote to Down
+* @method getCommentsPost - get the number of comments for a post from server
 */
 
 class PostPreview extends Component {
   state = {
-    comments: null
+    comments: 0
   };
 
   componentDidMount = () => {

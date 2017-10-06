@@ -25,24 +25,16 @@ const styles = {
 * @function Comments
 * @Description - Show a list of comments
 * @props {array} comments - comments data
+* @props {string} sorted -  sort controller
+* @props {function} getComments - dispatch getComments action
+* @props {function} voteUp - dispatch commentVoteUp action
+* @props {function} voteDown - dispatch commentVoteDown action
+* @method vote - send the vote to server
+* @method voteCommentUp - functionallity for up
+* @methof voteCommenDown - functionallity for down
 */
 
 class Comments extends Component {
-  /*
-  componentDidMount = () => {
-    this.getCommentsPost();
-  };
-
-  getCommentsPost = () => {
-    fetch(URL + "/posts/" + this.props.id + "/comments", {
-      headers: { Authorization: HEADER }
-    })
-      .then(response => response.json())
-      .then(result => {
-        this.props.getComments(result);
-      });
-  };
-*/
   vote = (id, option) => {
     return fetch(URL + "/comments/" + id, {
       headers: {

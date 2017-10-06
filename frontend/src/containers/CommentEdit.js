@@ -23,18 +23,14 @@ const HEADER = process.env.REACT_APP_API_HEADER;
 * @Description - Show a list of comments
 * @props {array} posts - parent post data
 * @props {array} comments - comments data
-* @props {function} commentEdited - dispatch commentEdited() action,
-* @props {function} commentDeleted - dispatch(commentDeleted() action,
+* @props {function} commentEdited - dispatch commentEdited action
+* @props {function} commentDeleted - dispatch commentDeleted action
 * @param {boolean} alertVisible: to show alert message
 * @param {boolean} successVisible: to show success message
-* @param {boolean} authorMod: avoid an error status on author without content on mounting
-* @param {boobean} bodyMod: avoid an error status on body without content on mounting
-* @param {object} comment: author and body contain the comment data
-* @method getValidateName: controller for Author
 * @method getValidateBody: controller for body
-* @method handleName: set state.comment.author with input
 * @method handleBody: set state.comment.body with input
 * @method saveComment: send comment data to server
+* @method deleteComment: send delete flag in comment to server
 * @method handleDismiss: hide the error message
 * @method handleSuccess: hide the success message
 */
@@ -55,23 +51,9 @@ class CommentEdit extends Component {
     });
   };
 
-  getValidateName = () => {
-    const length = this.state.comment.author.length;
-    if (length === 0) return "error";
-  };
-
   getValidateBody = () => {
     const length = this.state.comment.body.length;
     if (length === 0) return "error";
-  };
-
-  handleName = e => {
-    this.setState({
-      comment: {
-        ...this.state.comment,
-        author: e.target.value
-      }
-    });
   };
 
   handleBody = e => {
@@ -208,7 +190,7 @@ class CommentEdit extends Component {
         )}
         {!comment && (
           <Alert bsStyle="danger">
-            You have to access to edit comments throught a link in comment.
+            You have to access to edit comments through a link in comment.
           </Alert>
         )}
       </div>

@@ -17,9 +17,20 @@ const URL = process.env.REACT_APP_API_SERVER;
 const HEADER = process.env.REACT_APP_API_HEADER;
 
 /**
-* @function CommentEdit
-* @Description - Show a list of comments
-* @props {array} comments - comments data
+* @function NewPost
+* @Description - Create a new post and send it to server
+* @props {array} categories: categories where add the post
+* @props {function} newPost - dispatch newPost action
+* @method getValidateName - controller for Author
+* @method getValidateBody - controller for the body post
+* @method getValidateTitle - controller for Title
+* @method handleName - set state.post.author with input
+* @method handleBody - set state.post.body with input
+* @method handleTitle - set state.post.title with input
+* @method handleDismiss - controller for alert message
+* @method handleSuccess - controller for success message
+* @method handleCategory - controller for category
+* @method savePost - send the new post to server
 */
 
 class NewPost extends Component {

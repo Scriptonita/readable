@@ -16,7 +16,15 @@ const HEADER = process.env.REACT_APP_API_HEADER;
 * @name Post
 * @description - Funtionallity to show a Post detail view
 * @props {object} post - A Post details
-* @props {function} getPost - Get post details from store
+* @props {function} getPost - dispatch getPost action
+* @props {function} getComments - dispatch getComments action
+* @props {function} voteUp - dispatch postVoteUp action
+* @props {function} voteDown - dispatch postVoteDown action
+* @method getPostDetails - Get post from server and put it in store
+* @method getCommentsPost - Get comment from server and put in store
+* @method vote - send a vote to server
+* @method voteUp - controller for vote up
+* @method voteDown - controller for vote down
 */
 
 class Post extends Component {
