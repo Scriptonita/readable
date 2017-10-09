@@ -55,7 +55,7 @@ To get started developing right away:
     ├── store # Store Folder.
     │   └── configureStore.js
     ├── utils # functions for app.
-    │   ├── Functions.js
+    │   ├── Functions.js # Funtionallity to convert timestamp
     │   └── Sort.js # function to sort posts or comments
     ├── index.css # Global styles. You probably won't need to change anything here.
     └── index.js # You should not need to modify this file. It is used for DOM rendering only.
